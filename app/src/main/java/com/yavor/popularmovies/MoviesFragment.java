@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.GridLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,13 +34,13 @@ public class MoviesFragment extends Fragment {
     }
 
     private static final String LOG_TAG = MoviesFragment.class.getSimpleName();
-    GridView mGridView;
+    GridLayout mGridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
-        mGridView = (GridView) view.findViewById(R.id.grid_view);
+        mGridView = (GridLayout) view.findViewById(R.id.grid_view);
         return view;
     }
 
@@ -138,12 +138,14 @@ public class MoviesFragment extends Fragment {
 
         private void buildUrl(String sort_pref) {
             Uri buildUri = Uri.parse(THEMOVIEDB_BASE_URL).buildUpon()
-                    .appendPath(POPULAR_MOVIES_PATH)
+                    .appendEncodedPath(POPULAR_MOVIES_PATH)
                     .appendQueryParameter(SORT_QUERY, sort_pref)
                     .appendQueryParameter(APIKEY_QUERY, API_KEY)
                     .build();
+            String finalUrl = buildUri.toString();
+            Log.v(LOG_TAG, "Computed url: " + finalUrl);
             try {
-                mFetchUrl = new URL(buildUri.toString());
+                mFetchUrl = new URL(finalUrl);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
