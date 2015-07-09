@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class MovieInfo {
     private boolean mAdult;
+    private String mBackdropPath;
     private int[] mGenreIds;
     private int mId;
     private String mOriginalLanguage;
@@ -15,7 +16,7 @@ public class MovieInfo {
     private String mTitle;
     private boolean mVideo;
     private double mVoteAverage;
-    private double mVoteCount;
+    private int mVoteCount;
 
     public boolean isAdult() {
         return mAdult;
@@ -23,6 +24,14 @@ public class MovieInfo {
 
     public void setAdult(boolean adult) {
         this.mAdult = adult;
+    }
+
+    public String getBackdropPath() {
+        return mBackdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.mBackdropPath = backdropPath;
     }
 
     public int[] getGenreIds() {
@@ -113,11 +122,11 @@ public class MovieInfo {
         this.mVoteAverage = voteAverage;
     }
 
-    public double getVoteCount() {
+    public int getVoteCount() {
         return mVoteCount;
     }
 
-    public void setVoteCount(double voteCount) {
+    public void setVoteCount(int voteCount) {
         this.mVoteCount = voteCount;
     }
 }
