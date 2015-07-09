@@ -1,9 +1,17 @@
-<GridLayout android:id="@+id/grid_view"
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivityFragment"
-    android:columnCount="2" android:rowCount="2">
+    tools:context=".MainActivityFragment">
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:numColumns="2">
+    </GridView>
 
-</GridLayout>
+</FrameLayout>
