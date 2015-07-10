@@ -22,6 +22,14 @@
             android:name=".MovieDetailsActivity"
             android:label="@string/title_activity_movie_details" >
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.yavor.popularmovies.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

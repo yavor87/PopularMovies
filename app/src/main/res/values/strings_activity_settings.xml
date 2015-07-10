@@ -1,0 +1,19 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_sort_title">Sort By</string>
+    <string name="pref_sort_label_popularity">Most popular</string>
+    <string name="pref_sort_label_rating">Highest-rated</string>
+    <string name="pref_sort_key" translatable="false">SORT_KEY</string>
+    <string name="pref_sort_popularity" translatable="false">popularity.desc</string>
+    <string name="pref_sort_rating" translatable="false">vote_average.desc</string>
+    <string-array name="pref_sort_options">
+        <item>@string/pref_sort_label_popularity</item>
+        <item>@string/pref_sort_label_rating</item>
+    </string-array>
+    <string-array name="pref_sort_values">
+        <item>@string/pref_sort_popularity</item>
+        <item>@string/pref_sort_rating</item>
+    </string-array>
+</resources>
