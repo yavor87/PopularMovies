@@ -6,26 +6,29 @@
 
     <TextView android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="#FF0000"
+        android:background="#009688"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/movie_nameView" />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/movie_posterView"
         android:layout_below="@+id/movie_nameView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="71dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="2015"
         android:id="@+id/movie_yearView"
         android:layout_below="@+id/movie_nameView"
         android:layout_toRightOf="@+id/movie_posterView"
@@ -38,7 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="120min"
         android:id="@+id/movie_durationView"
         android:layout_below="@+id/movie_yearView"
         android:layout_alignLeft="@+id/movie_yearView"
@@ -48,10 +50,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/textView3"
+        android:id="@+id/ratingView"
         android:layout_below="@+id/movie_durationView"
         android:layout_alignLeft="@+id/movie_durationView"
         android:layout_alignStart="@+id/movie_durationView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/overviewView"
+        android:layout_below="@+id/movie_posterView"
+        android:layout_margin="10dp" />
 
 </RelativeLayout>

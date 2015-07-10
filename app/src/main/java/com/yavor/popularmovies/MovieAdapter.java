@@ -10,12 +10,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.yavor.popularmovies.utils.MovieDB;
 
 import java.util.ArrayList;
 
 class MoviesAdapter extends BaseAdapter {
-    public static final String POSTER_GET_BASAE_URL = "http://image.tmdb.org/t/p/";
-    public static final String REQUEST_SIZE = "w185";
     private static final String LOG_TAG = MoviesAdapter.class.getSimpleName();
     private final Context mContext;
     private final ArrayList<MovieInfo> mItemsArrayList;
@@ -64,18 +63,11 @@ class MoviesAdapter extends BaseAdapter {
         }
 
         MovieInfo currentItem = mItemsArrayList.get(position);
-        String posterPath = buildPosterUrl(currentItem);
+        String posterPath = MovieDB.getFullPosterUrl(currentItem.getPosterPath());
         Picasso.with(mContext)
                 .load(posterPath)
                 .into(rowView);
 
         return rowView;
-    }
-
-    private String buildPosterUrl(MovieInfo info) {
-        return Uri.parse(POSTER_GET_BASAE_URL).buildUpon()
-                .appendPath(REQUEST_SIZE)
-                .appendEncodedPath(info.getPosterPath())
-                .toString();
     }
 }
