@@ -33,27 +33,18 @@
         android:layout_below="@+id/movie_nameView"
         android:layout_toRightOf="@+id/movie_posterView"
         android:layout_toEndOf="@+id/movie_posterView"
-        android:layout_marginLeft="74dp"
-        android:layout_marginStart="74dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="24dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/movie_durationView"
-        android:layout_below="@+id/movie_yearView"
-        android:layout_alignLeft="@+id/movie_yearView"
-        android:layout_alignStart="@+id/movie_yearView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/ratingView"
-        android:layout_below="@+id/movie_durationView"
-        android:layout_alignLeft="@+id/movie_durationView"
-        android:layout_alignStart="@+id/movie_durationView" />
+        android:layout_below="@+id/movie_yearView"
+        android:layout_alignLeft="@+id/movie_yearView"
+        android:layout_alignStart="@+id/movie_yearView" />
 
     <TextView
         android:layout_width="wrap_content"

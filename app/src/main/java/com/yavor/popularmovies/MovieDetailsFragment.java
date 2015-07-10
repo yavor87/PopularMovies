@@ -60,9 +60,6 @@ public class MovieDetailsFragment extends Fragment {
         Date movieDate = mMovie.getReleaseDate();
         yearView.setText(yearFormat.format(movieDate));
 
-        // Duration
-        TextView durationView = (TextView) rootView.findViewById(R.id.movie_durationView);
-
         // Poster
         ImageView posterView = (ImageView) rootView.findViewById(R.id.movie_posterView);
         String posterPath = MovieDB.getFullPosterUrl(mMovie.getPosterPath());

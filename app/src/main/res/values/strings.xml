@@ -8,5 +8,5 @@
         <item>popularity.desc</item>
         <item>vote_average.desc</item>
     </string-array>
-    <string name="title_activity_movie_details">MovieDetailsActivity</string>
+    <string name="title_activity_movie_details">MovieDetail</string>
 </resources>
