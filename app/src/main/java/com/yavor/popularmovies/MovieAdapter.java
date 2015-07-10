@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -55,6 +56,11 @@ class MoviesAdapter extends BaseAdapter {
             rowView = (ImageView) convertView;
         } else {
             rowView = new ImageView(mContext);
+            rowView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            rowView.setAdjustViewBounds(true);
+            rowView.setLayoutParams(new GridView.LayoutParams(
+                    GridView.LayoutParams.MATCH_PARENT,
+                    GridView.LayoutParams.MATCH_PARENT));
         }
 
         MovieInfo currentItem = mItemsArrayList.get(position);
