@@ -163,7 +163,7 @@ class FetchMoviesTask extends AsyncTask<String, Void, MovieInfo[]> {
             movieInfo.setPosterPath(movieJson.optString(POSTER_PATH_KEY));
 
             // Popularity
-            movieInfo.setPopularity(movieJson.optInt(POPULARITY_KEY));
+            movieInfo.setPopularity(movieJson.optDouble(POPULARITY_KEY));
 
             // Title
             movieInfo.setTitle(movieJson.optString(TITLE_KEY));
@@ -172,7 +172,7 @@ class FetchMoviesTask extends AsyncTask<String, Void, MovieInfo[]> {
             movieInfo.setVideo(movieJson.optBoolean(VIDEO_KEY));
 
             // Vote average
-            movieInfo.setVoteAverage(movieJson.optInt(VOTE_AVERAGE_KEY));
+            movieInfo.setVoteAverage(movieJson.optDouble(VOTE_AVERAGE_KEY));
 
             // Vote count
             movieInfo.setVoteCount(movieJson.optInt(VOTE_COUNT_KEY));
