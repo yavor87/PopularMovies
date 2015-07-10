@@ -1,8 +1,9 @@
 package com.yavor.popularmovies;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class MovieInfo {
+public class MovieInfo implements Serializable {
     private boolean mAdult;
     private String mBackdropPath;
     private int[] mGenreIds;

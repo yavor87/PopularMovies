@@ -1,5 +1,6 @@
 package com.yavor.popularmovies;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,10 @@ public class MoviesFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MovieInfo selectedMovie = (MovieInfo) parent.getItemAtPosition(position);
+                Intent showDetailsIntent = new Intent(getActivity(), MovieDetailsActivity.class);
+                showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ARG, selectedMovie);
+                startActivity(showDetailsIntent);
             }
         });
 
