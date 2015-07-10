@@ -1,5 +1,6 @@
 package com.yavor.popularmovies;
 
+import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.detailFragmentPlaceholder, fragment)
                     .commit();
+        }
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 }
