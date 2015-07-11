@@ -81,7 +81,7 @@ class FetchMoviesTask extends AsyncTask<String, Void, MovieInfo[]> {
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
-            jsonStr = null;
+            return null;
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();

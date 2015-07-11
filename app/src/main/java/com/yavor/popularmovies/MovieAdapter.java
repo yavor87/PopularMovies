@@ -40,6 +40,9 @@ class MoviesAdapter extends BaseAdapter {
     }
 
     public void reset(MovieInfo[] movies) {
+        if (movies == null || movies.length == 0)
+            return;
+
         mItemsArrayList.clear();
         for (MovieInfo m : movies) {
             mItemsArrayList.add(m);
