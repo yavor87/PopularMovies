@@ -67,9 +67,11 @@ class MoviesAdapter extends BaseAdapter {
 
         MovieInfo currentItem = mItemsArrayList.get(position);
         String posterPath = MovieDB.getFullPosterUrl(currentItem.getPosterPath());
-        Picasso.with(mContext)
-                .load(posterPath)
-                .into(rowView);
+        if (posterPath != null && posterPath.length() > 0) {
+            Picasso.with(mContext)
+                    .load(posterPath)
+                    .into(rowView);
+        }
 
         return rowView;
     }
