@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MovieDBUtils {
+    public static final String API_KEY = ""; // TODO: Put in API_KEY
     public static final String POSTER_GET_BASAE_URL = "http://image.tmdb.org/t/p/";
     public static final String REQUEST_SIZE = "w185";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);

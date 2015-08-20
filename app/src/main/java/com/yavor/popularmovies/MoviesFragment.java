@@ -3,14 +3,16 @@ package com.yavor.popularmovies;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import com.yavor.popularmovies.utils.MovieDBUtils;
 
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class MoviesFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MovieDb selectedMovie = (MovieDb) parent.getItemAtPosition(position);
                 Intent showDetailsIntent = new Intent(getActivity(), MovieDetailsActivity.class);
-                showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ARG, selectedMovie);
+                showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ID_ARG, selectedMovie.getId());
                 startActivity(showDetailsIntent);
             }
         });
@@ -62,13 +64,12 @@ public class MoviesFragment extends Fragment {
     }
 
     class FetchMoviesTask extends AsyncTask<String, Void, List<MovieDb>> {
-        private static final String API_KEY = ""; // TODO: Put in API_KEY
 
         @Override
         protected List<MovieDb> doInBackground(String... params) {
             String sortBy = params[0];
 
-            TmdbApi api = new TmdbApi(API_KEY);
+            TmdbApi api = new TmdbApi(MovieDBUtils.API_KEY);
             Discover d = new Discover();
             d.sortBy(sortBy);
             MovieResultsPage page = api.getDiscover().getDiscover(d);
