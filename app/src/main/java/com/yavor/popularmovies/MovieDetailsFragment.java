@@ -48,19 +48,31 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     private void bindView(View rootView, MovieDb movie) {
+        ImageView posterView = (ImageView) rootView.findViewById(R.id.movie_posterView);
+
         // Title
-        TextView nameView = (TextView) rootView.findViewById(R.id.movie_nameView);
-        nameView.setText(movie.getTitle());
+        TextView nameView = (TextView) rootView.findViewById(R.id.movie_name);
+        String title = movie.getTitle();
+        if (title != null) {
+            nameView.setText(title);
+            posterView.setContentDescription(title);
+        }
 
         // Year
-        TextView yearView = (TextView) rootView.findViewById(R.id.movie_yearView);
+        TextView yearView = (TextView) rootView.findViewById(R.id.movie_year);
         String releaseYear = MovieDBUtils.getReleaseYear(movie.getReleaseDate());
         if (releaseYear != null) {
             yearView.setText(releaseYear);
         }
 
+        // Duration
+        TextView durationView = (TextView) rootView.findViewById(R.id.movie_duration);
+        int runtime = movie.getRuntime();
+        if (runtime > 0) {
+            durationView.setText(String.format(getString(R.string.runtime_text_format), runtime));
+        }
+
         // Poster
-        ImageView posterView = (ImageView) rootView.findViewById(R.id.movie_posterView);
         String posterPath = MovieDBUtils.getFullPosterUrl(movie.getPosterPath());
         if (posterPath != null && posterPath.length() > 0) {
             Picasso.with(getActivity())
@@ -69,11 +81,11 @@ public class MovieDetailsFragment extends Fragment {
         }
 
         // Rating
-        TextView ratingView = (TextView) rootView.findViewById(R.id.ratingView);
+        TextView ratingView = (TextView) rootView.findViewById(R.id.movie_rating);
         ratingView.setText(String.format("%.1f/10", movie.getVoteAverage()));
 
         // Overview
-        TextView overviewView = (TextView) rootView.findViewById(R.id.overviewView);
+        TextView overviewView = (TextView) rootView.findViewById(R.id.movie_overview);
         String overview = movie.getOverview();
         if (overview != null && overview.length() > 0) {
             overviewView.setText(overview);
