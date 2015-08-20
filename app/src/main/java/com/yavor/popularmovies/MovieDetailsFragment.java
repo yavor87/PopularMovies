@@ -1,7 +1,7 @@
 package com.yavor.popularmovies;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.yavor.popularmovies.utils.MovieDB;
+import com.yavor.popularmovies.utils.MovieDBUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import info.movito.themoviedbapi.model.MovieDb;
 
 public class MovieDetailsFragment extends Fragment {
-    public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.ENGLISH);
 
     public MovieDetailsFragment() {
     }
 
-    MovieInfo mMovie;
+    MovieDb mMovie;
 
-    public static MovieDetailsFragment createInstance(MovieInfo movie) {
+    public static MovieDetailsFragment createInstance(MovieDb movie) {
         MovieDetailsFragment fragment = new MovieDetailsFragment();
         Bundle args = new Bundle();
         args.putSerializable(MovieDetailsActivity.MOVIE_ARG, movie);
@@ -38,7 +35,7 @@ public class MovieDetailsFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null)
         {
-            mMovie = (MovieInfo) args.getSerializable(MovieDetailsActivity.MOVIE_ARG);
+            mMovie = (MovieDb) args.getSerializable(MovieDetailsActivity.MOVIE_ARG);
         }
     }
 
@@ -57,12 +54,12 @@ public class MovieDetailsFragment extends Fragment {
 
         // Year
         TextView yearView = (TextView) rootView.findViewById(R.id.movie_yearView);
-        Date movieDate = mMovie.getReleaseDate();
-        yearView.setText(yearFormat.format(movieDate));
+        String releaseYear = MovieDBUtils.getReleaseYear(mMovie.getReleaseDate());
+        yearView.setText(releaseYear);
 
         // Poster
         ImageView posterView = (ImageView) rootView.findViewById(R.id.movie_posterView);
-        String posterPath = MovieDB.getFullPosterUrl(mMovie.getPosterPath());
+        String posterPath = MovieDBUtils.getFullPosterUrl(mMovie.getPosterPath());
         Picasso.with(getActivity())
                 .load(posterPath)
                 .into(posterView);

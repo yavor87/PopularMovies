@@ -1,7 +1,6 @@
 package com.yavor.popularmovies;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,16 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
-import com.yavor.popularmovies.utils.MovieDB;
+import com.yavor.popularmovies.utils.MovieDBUtils;
 
 import java.util.ArrayList;
+
+import info.movito.themoviedbapi.model.MovieDb;
 
 class MoviesAdapter extends BaseAdapter {
     private static final String LOG_TAG = MoviesAdapter.class.getSimpleName();
     private final Context mContext;
-    private final ArrayList<MovieInfo> mItemsArrayList;
+    private final ArrayList<MovieDb> mItemsArrayList;
 
     public MoviesAdapter(Context context) {
         mContext = context;
@@ -39,9 +40,9 @@ class MoviesAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void reset(MovieInfo[] movies) {
+    public void reset(Iterable<MovieDb> movies) {
         mItemsArrayList.clear();
-        for (MovieInfo m : movies) {
+        for (MovieDb m : movies) {
             mItemsArrayList.add(m);
         }
         notifyDataSetChanged();
@@ -62,8 +63,8 @@ class MoviesAdapter extends BaseAdapter {
                     GridView.LayoutParams.MATCH_PARENT));
         }
 
-        MovieInfo currentItem = mItemsArrayList.get(position);
-        String posterPath = MovieDB.getFullPosterUrl(currentItem.getPosterPath());
+        MovieDb currentItem = mItemsArrayList.get(position);
+        String posterPath = MovieDBUtils.getFullPosterUrl(currentItem.getPosterPath());
         Picasso.with(mContext)
                 .load(posterPath)
                 .into(rowView);

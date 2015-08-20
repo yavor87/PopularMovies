@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import info.movito.themoviedbapi.model.MovieDb;
+
 public class MovieDetailsActivity extends AppCompatActivity {
 
     public static final String MOVIE_ARG = "movie_arg";
@@ -15,7 +17,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
 
         Intent intent = getIntent();
-        MovieInfo movie = (MovieInfo) intent.getSerializableExtra(MOVIE_ARG);
+        MovieDb movie = (MovieDb) intent.getSerializableExtra(MOVIE_ARG);
 
         if (findViewById(R.id.detailFragmentPlaceholder) != null) {
             if (savedInstanceState != null)
