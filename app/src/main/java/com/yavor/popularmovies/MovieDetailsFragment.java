@@ -127,6 +127,10 @@ public class MovieDetailsFragment extends Fragment {
     private class FetchMovieInfoTask extends AsyncTask<Integer, Void, MovieDb> {
         @Override
         protected MovieDb doInBackground(Integer... params) {
+            if (MovieDBUtils.API_KEY == null || MovieDBUtils.API_KEY == "") {
+                Log.wtf(LOG_TAG, "Did you forget to set api key?");
+                return null;
+            }
             try {
                 TmdbApi api = new TmdbApi(MovieDBUtils.API_KEY);
                 return api.getMovies().getMovie(params[0], null,

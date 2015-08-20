@@ -87,6 +87,10 @@ public class MoviesFragment extends Fragment {
         protected List<MovieDb> doInBackground(String... params) {
             String sortBy = params[0];
 
+            if (MovieDBUtils.API_KEY == null || MovieDBUtils.API_KEY == "") {
+                Log.wtf(LOG_TAG, "Did you forget to set api key?");
+                return null;
+            }
             try {
                 TmdbApi api = new TmdbApi(MovieDBUtils.API_KEY);
                 Discover d = new Discover();
