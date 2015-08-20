@@ -41,6 +41,9 @@ class MoviesAdapter extends BaseAdapter {
     }
 
     public void reset(Iterable<MovieDb> movies) {
+        if (movies == null)
+            return;
+        
         mItemsArrayList.clear();
         for (MovieDb m : movies) {
             mItemsArrayList.add(m);

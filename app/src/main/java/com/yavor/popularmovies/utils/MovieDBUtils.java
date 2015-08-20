@@ -25,7 +25,7 @@ public class MovieDBUtils {
     }
 
     public static String getReleaseYear(String releaseDate) {
-        String year = "";
+        String year = null;
         if (releaseDate != null) {
             try {
                 Date movieDate = DATE_FORMAT.parse(releaseDate);

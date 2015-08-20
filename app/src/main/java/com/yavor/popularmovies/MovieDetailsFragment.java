@@ -55,14 +55,18 @@ public class MovieDetailsFragment extends Fragment {
         // Year
         TextView yearView = (TextView) rootView.findViewById(R.id.movie_yearView);
         String releaseYear = MovieDBUtils.getReleaseYear(mMovie.getReleaseDate());
-        yearView.setText(releaseYear);
+        if (releaseYear != null) {
+            yearView.setText(releaseYear);
+        }
 
         // Poster
         ImageView posterView = (ImageView) rootView.findViewById(R.id.movie_posterView);
         String posterPath = MovieDBUtils.getFullPosterUrl(mMovie.getPosterPath());
-        Picasso.with(getActivity())
-                .load(posterPath)
-                .into(posterView);
+        if (posterPath != null && posterPath.length() > 0) {
+            Picasso.with(getActivity())
+                    .load(posterPath)
+                    .into(posterView);
+        }
 
         // Rating
         TextView ratingView = (TextView) rootView.findViewById(R.id.ratingView);
@@ -70,6 +74,11 @@ public class MovieDetailsFragment extends Fragment {
 
         // Overview
         TextView overviewView = (TextView) rootView.findViewById(R.id.overviewView);
-        overviewView.setText(mMovie.getOverview());
+        String overview = mMovie.getOverview();
+        if (overview != null && overview.length() > 0) {
+            overviewView.setText(overview);
+        } else {
+            overviewView.setText(getString(R.string.no_overview_found));
+        }
     }
 }
