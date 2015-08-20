@@ -1,6 +1,6 @@
 package com.yavor.popularmovies;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +26,7 @@ public class MoviesFragment extends Fragment {
     }
 
     private MovieAdapter mAdapter;
+    private OnMovieSelectedListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,10 +40,10 @@ public class MoviesFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MovieDb selectedMovie = (MovieDb) parent.getItemAtPosition(position);
-                Intent showDetailsIntent = new Intent(getActivity(), MovieDetailsActivity.class);
-                showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ID_ARG, selectedMovie.getId());
-                startActivity(showDetailsIntent);
+                if (mListener != null) {
+                    MovieDb selectedMovie = (MovieDb) parent.getItemAtPosition(position);
+                    mListener.movieSelected(selectedMovie.getId());
+                }
             }
         });
 
@@ -53,6 +54,20 @@ public class MoviesFragment extends Fragment {
     public void onStart() {
         super.onStart();
         updateMovies();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof MoviesFragment.OnMovieSelectedListener) {
+            mListener = (MoviesFragment.OnMovieSelectedListener) activity;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     private void updateMovies() {
@@ -80,5 +95,9 @@ public class MoviesFragment extends Fragment {
         protected void onPostExecute(List<MovieDb> movies) {
             mAdapter.reset(movies);
         }
+    }
+
+    public interface OnMovieSelectedListener {
+        void movieSelected(int movieId);
     }
 }

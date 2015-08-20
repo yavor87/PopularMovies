@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MoviesFragment.OnMovieSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +36,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void movieSelected(int movieId) {
+        Intent showDetailsIntent = new Intent(this, MovieDetailsActivity.class);
+        showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ID_ARG, movieId);
+        startActivity(showDetailsIntent);
     }
 }
