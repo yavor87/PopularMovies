@@ -1,5 +1,6 @@
 package com.yavor.popularmovies;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -15,6 +17,8 @@ import com.yavor.popularmovies.utils.MovieDBUtils;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Reviews;
+import info.movito.themoviedbapi.model.Video;
 
 public class MovieDetailsFragment extends Fragment {
 
@@ -48,6 +52,8 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     private void bindView(View rootView, MovieDb movie) {
+        Context context = getActivity();
+
         ImageView posterView = (ImageView) rootView.findViewById(R.id.movie_posterView);
 
         // Title
@@ -75,7 +81,7 @@ public class MovieDetailsFragment extends Fragment {
         // Poster
         String posterPath = MovieDBUtils.getFullPosterUrl(movie.getPosterPath());
         if (posterPath != null && posterPath.length() > 0) {
-            Picasso.with(getActivity())
+            Picasso.with(context)
                     .load(posterPath)
                     .into(posterView);
         }
@@ -91,6 +97,26 @@ public class MovieDetailsFragment extends Fragment {
             overviewView.setText(overview);
         } else {
             overviewView.setText(getString(R.string.no_overview_found));
+        }
+
+        // Trailers
+        LinearLayout trailersView = (LinearLayout) rootView.findViewById(R.id.trailers_list);
+        if (movie.getVideos() != null) {
+            for (Video trailer : movie.getVideos()) {
+                TextView trailerView = new TextView(context);
+                trailerView.setText(trailer.getName());
+                trailersView.addView(trailerView);
+            }
+        }
+
+        // Reviews
+        LinearLayout reviewsView = (LinearLayout) rootView.findViewById(R.id.reviews_list);
+        if (movie.getReviews() != null) {
+            for (Reviews review : movie.getReviews()) {
+                TextView reviewView = new TextView(context);
+                reviewView.setText(review.getContent());
+                reviewsView.addView(reviewView);
+            }
         }
     }
 
