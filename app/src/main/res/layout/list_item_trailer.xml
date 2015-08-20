@@ -3,7 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:listPreferredItemHeight">
+    android:minHeight="?android:listPreferredItemHeight"
+    android:paddingTop="3dp" android:paddingBottom="3dp">
     <TextView
         android:id="@+id/item_trailer_name"
         android:layout_marginStart="80dp"

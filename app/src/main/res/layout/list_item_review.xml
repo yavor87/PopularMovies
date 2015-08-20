@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:listPreferredItemHeight">
+    android:minHeight="?android:listPreferredItemHeight"
+    android:paddingTop="3dp" android:paddingBottom="3dp">
 
     <TextView
         android:id="@+id/item_review_author"
