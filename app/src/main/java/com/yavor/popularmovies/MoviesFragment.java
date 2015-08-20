@@ -23,14 +23,14 @@ public class MoviesFragment extends Fragment {
     public MoviesFragment() {
     }
 
-    private MoviesAdapter mAdapter;
+    private MovieAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_movies, container, false);
 
-        mAdapter = new MoviesAdapter(this.getActivity());
+        mAdapter = new MovieAdapter(this.getActivity());
 
         GridView gridView = (GridView)rootView.findViewById(R.id.grid_view);
         gridView.setAdapter(mAdapter);
@@ -62,7 +62,7 @@ public class MoviesFragment extends Fragment {
     }
 
     class FetchMoviesTask extends AsyncTask<String, Void, List<MovieDb>> {
-        private static final String API_KEY = "";
+        private static final String API_KEY = ""; // TODO: Put in API_KEY
 
         @Override
         protected List<MovieDb> doInBackground(String... params) {

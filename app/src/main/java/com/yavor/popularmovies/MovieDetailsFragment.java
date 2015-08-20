@@ -18,7 +18,7 @@ public class MovieDetailsFragment extends Fragment {
     public MovieDetailsFragment() {
     }
 
-    MovieDb mMovie;
+    private MovieDb mMovie;
 
     public static MovieDetailsFragment createInstance(MovieDb movie) {
         MovieDetailsFragment fragment = new MovieDetailsFragment();

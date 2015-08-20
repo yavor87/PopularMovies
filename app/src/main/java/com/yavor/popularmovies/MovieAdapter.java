@@ -15,12 +15,12 @@ import java.util.ArrayList;
 
 import info.movito.themoviedbapi.model.MovieDb;
 
-class MoviesAdapter extends BaseAdapter {
-    private static final String LOG_TAG = MoviesAdapter.class.getSimpleName();
+public class MovieAdapter extends BaseAdapter {
+    private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
     private final Context mContext;
     private final ArrayList<MovieDb> mItemsArrayList;
 
-    public MoviesAdapter(Context context) {
+    public MovieAdapter(Context context) {
         mContext = context;
         mItemsArrayList = new ArrayList<>();
     }
