@@ -105,11 +105,16 @@ public class MovieDetailsFragment extends Fragment {
 
         // Trailers
         LinearLayout trailersView = (LinearLayout) rootView.findViewById(R.id.trailers_list);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         if (movie.getVideos() != null) {
             for (Video trailer : movie.getVideos()) {
-                TextView trailerView = new TextView(context);
+                View view = layoutInflater.inflate(R.layout.list_item_trailer, trailersView, false);
+
+                // Trailer name
+                TextView trailerView = (TextView) view.findViewById(R.id.item_trailer_name);
                 trailerView.setText(trailer.getName());
-                trailersView.addView(trailerView);
+
+                trailersView.addView(view);
             }
         }
 
@@ -117,9 +122,17 @@ public class MovieDetailsFragment extends Fragment {
         LinearLayout reviewsView = (LinearLayout) rootView.findViewById(R.id.reviews_list);
         if (movie.getReviews() != null) {
             for (Reviews review : movie.getReviews()) {
-                TextView reviewView = new TextView(context);
+                View view = layoutInflater.inflate(R.layout.list_item_review, trailersView, false);
+
+                // Author
+                TextView authorView = (TextView) view.findViewById(R.id.item_review_author);
+                authorView.setText(review.getAuthor());
+
+                // Text
+                TextView reviewView = (TextView) view.findViewById(R.id.item_review_text);
                 reviewView.setText(review.getContent());
-                reviewsView.addView(reviewView);
+
+                reviewsView.addView(view);
             }
         }
     }
