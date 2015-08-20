@@ -3,6 +3,7 @@ package com.yavor.popularmovies;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,26 +104,44 @@ public class MovieDetailsFragment extends Fragment {
             overviewView.setText(getString(R.string.no_overview_found));
         }
 
-        // Trailers
-        LinearLayout trailersView = (LinearLayout) rootView.findViewById(R.id.trailers_list);
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        if (movie.getVideos() != null) {
+
+        // Trailers
+        addTrailers(rootView, movie, layoutInflater);
+
+        // Reviews
+        addReviews(rootView, movie, layoutInflater);
+    }
+
+    private void addTrailers(View rootView, MovieDb movie, LayoutInflater inflater) {
+        View trailersContainer = rootView.findViewById(R.id.trailers_container);
+        LinearLayout trailersList = (LinearLayout) trailersContainer.findViewById(R.id.trailers_list);
+        View emptyTrailers = trailersContainer.findViewById(R.id.trailers_empty);
+        if (movie.getVideos() != null && !movie.getVideos().isEmpty()) {
             for (Video trailer : movie.getVideos()) {
-                View view = layoutInflater.inflate(R.layout.list_item_trailer, trailersView, false);
+                View view = inflater.inflate(R.layout.list_item_trailer, trailersList, false);
 
                 // Trailer name
                 TextView trailerView = (TextView) view.findViewById(R.id.item_trailer_name);
                 trailerView.setText(trailer.getName());
 
-                trailersView.addView(view);
+                trailersList.addView(view);
             }
+            emptyTrailers.setVisibility(View.GONE);
+            trailersList.setVisibility(View.VISIBLE);
+        } else {
+            emptyTrailers.setVisibility(View.VISIBLE);
+            trailersList.setVisibility(View.GONE);
         }
+    }
 
-        // Reviews
-        LinearLayout reviewsView = (LinearLayout) rootView.findViewById(R.id.reviews_list);
-        if (movie.getReviews() != null) {
+    private void addReviews(View rootView, MovieDb movie, LayoutInflater inflater) {
+        View reviewsContainer = rootView.findViewById(R.id.reviews_container);
+        LinearLayout reviewsList = (LinearLayout) reviewsContainer.findViewById(R.id.reviews_list);
+        View emptyReviews = reviewsContainer.findViewById(R.id.reviews_empty);
+        if (movie.getReviews() != null && !movie.getReviews().isEmpty()) {
             for (Reviews review : movie.getReviews()) {
-                View view = layoutInflater.inflate(R.layout.list_item_review, trailersView, false);
+                View view = inflater.inflate(R.layout.list_item_review, reviewsList, false);
 
                 // Author
                 TextView authorView = (TextView) view.findViewById(R.id.item_review_author);
@@ -132,8 +151,13 @@ public class MovieDetailsFragment extends Fragment {
                 TextView reviewView = (TextView) view.findViewById(R.id.item_review_text);
                 reviewView.setText(review.getContent());
 
-                reviewsView.addView(view);
+                reviewsList.addView(view);
             }
+            emptyReviews.setVisibility(View.GONE);
+            reviewsList.setVisibility(View.VISIBLE);
+        } else {
+            emptyReviews.setVisibility(View.VISIBLE);
+            reviewsList.setVisibility(View.GONE);
         }
     }
 

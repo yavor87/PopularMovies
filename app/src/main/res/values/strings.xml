@@ -7,4 +7,6 @@
     <string name="runtime_text_format">%d min</string>
     <string name="trailers_list_header">Trailers:</string>
     <string name="reviews_list_header">Reviews:</string>
+    <string name="empty_trailers">No trailers found</string>
+    <string name="empty_reviews">No reviews found</string>
 </resources>

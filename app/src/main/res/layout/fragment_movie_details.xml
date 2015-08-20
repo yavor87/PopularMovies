@@ -76,6 +76,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/trailers_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -85,11 +86,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/trailers_list_header" />
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/trailers_list" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/empty_trailers"
+                    android:layout_gravity="center"
+                    android:id="@+id/trailers_empty" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/trailers_list" />
+            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -102,11 +113,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reviews_list_header" />
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/reviews_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/reviews_list" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/empty_reviews"
+                    android:layout_gravity="center"
+                    android:id="@+id/reviews_empty" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/reviews_list" />
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 
