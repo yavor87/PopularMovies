@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.Discover;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import info.movito.themoviedbapi.tools.MovieDbException;
 
 public class MoviesFragment extends Fragment {
     public MoviesFragment() {
@@ -27,6 +29,7 @@ public class MoviesFragment extends Fragment {
 
     private MovieAdapter mAdapter;
     private OnMovieSelectedListener mListener;
+    private static final String LOG_TAG = MoviesFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,16 +87,23 @@ public class MoviesFragment extends Fragment {
         protected List<MovieDb> doInBackground(String... params) {
             String sortBy = params[0];
 
-            TmdbApi api = new TmdbApi(MovieDBUtils.API_KEY);
-            Discover d = new Discover();
-            d.sortBy(sortBy);
-            MovieResultsPage page = api.getDiscover().getDiscover(d);
-            return page.getResults();
+            try {
+                TmdbApi api = new TmdbApi(MovieDBUtils.API_KEY);
+                Discover d = new Discover();
+                d.sortBy(sortBy);
+                MovieResultsPage page = api.getDiscover().getDiscover(d);
+                return page.getResults();
+            } catch (MovieDbException e) {
+                Log.e(LOG_TAG, "Unable to get movie data", e);
+            }
+            return null;
         }
 
         @Override
         protected void onPostExecute(List<MovieDb> movies) {
-            mAdapter.reset(movies);
+            if (movies != null) {
+                mAdapter.reset(movies);
+            }
         }
     }
 

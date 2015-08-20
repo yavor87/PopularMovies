@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,14 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Reviews;
 import info.movito.themoviedbapi.model.Video;
+import info.movito.themoviedbapi.tools.MovieDbException;
 
 public class MovieDetailsFragment extends Fragment {
 
     public MovieDetailsFragment() {
     }
+
+    private static final String LOG_TAG = MovieDetailsFragment.class.getSimpleName();
 
     public static MovieDetailsFragment createInstance(int movieId) {
         MovieDetailsFragment fragment = new MovieDetailsFragment();
@@ -123,9 +127,14 @@ public class MovieDetailsFragment extends Fragment {
     private class FetchMovieInfoTask extends AsyncTask<Integer, Void, MovieDb> {
         @Override
         protected MovieDb doInBackground(Integer... params) {
-            TmdbApi api = new TmdbApi(MovieDBUtils.API_KEY);
-            return api.getMovies().getMovie(params[0], null,
-                    TmdbMovies.MovieMethod.reviews, TmdbMovies.MovieMethod.videos);
+            try {
+                TmdbApi api = new TmdbApi(MovieDBUtils.API_KEY);
+                return api.getMovies().getMovie(params[0], null,
+                        TmdbMovies.MovieMethod.reviews, TmdbMovies.MovieMethod.videos);
+            } catch (MovieDbException e) {
+                Log.e(LOG_TAG, "Unable to get movie details", e);
+            }
+            return null;
         }
 
         @Override
