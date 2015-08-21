@@ -38,6 +38,7 @@
             android:authorities="com.yavor.popularmovies"
             android:name=".data.MoviesProvider"
             android:exported="false" />
+        <service android:name=".services.MoviesService" />
     </application>
 
 </manifest>

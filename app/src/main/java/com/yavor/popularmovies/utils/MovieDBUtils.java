@@ -25,16 +25,14 @@ public class MovieDBUtils {
         return getFullPosterUrl(posterPath, REQUEST_SIZE);
     }
 
-    public static String getReleaseYear(String releaseDate) {
-        String year = null;
+    public static Date parseDate(String releaseDate) {
         if (releaseDate != null) {
             try {
-                Date movieDate = DATE_FORMAT.parse(releaseDate);
-                year = YEAR_FORMAT.format(movieDate);
+                return DATE_FORMAT.parse(releaseDate);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        return year;
+        return null;
     }
 }

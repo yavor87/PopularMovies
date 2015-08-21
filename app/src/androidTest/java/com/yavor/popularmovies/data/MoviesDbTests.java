@@ -151,6 +151,7 @@ public class MoviesDbTests extends AndroidTestCase {
         values.put(MoviesContract.Movie.RELEASEDATE, System.currentTimeMillis());
         values.put(MoviesContract.Movie.RUNTIME, 120);
         values.put(MoviesContract.Movie.VOTEAVERAGE, 4.4);
+        values.put(MoviesContract.Movie.POPULARITY, 14.4);
         return values;
     }
 }

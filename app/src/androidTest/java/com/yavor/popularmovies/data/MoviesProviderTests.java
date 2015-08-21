@@ -105,6 +105,7 @@ public class MoviesProviderTests extends ApplicationTest {
         assertEquals(values.get(MoviesContract.Movie.RELEASEDATE), c.getLong(c.getColumnIndex(MoviesContract.Movie.RELEASEDATE)));
         assertEquals(values.get(MoviesContract.Movie.RUNTIME), c.getInt(c.getColumnIndex(MoviesContract.Movie.RUNTIME)));
         assertEquals(values.getAsFloat(MoviesContract.Movie.VOTEAVERAGE), c.getFloat(c.getColumnIndex(MoviesContract.Movie.VOTEAVERAGE)));
+        assertEquals(values.getAsFloat(MoviesContract.Movie.POPULARITY), c.getFloat(c.getColumnIndex(MoviesContract.Movie.POPULARITY)));
 
         c.close();
     }
@@ -118,6 +119,7 @@ public class MoviesProviderTests extends ApplicationTest {
         values.put(MoviesContract.Movie.RELEASEDATE, System.currentTimeMillis());
         values.put(MoviesContract.Movie.RUNTIME, 120);
         values.put(MoviesContract.Movie.VOTEAVERAGE, 4.4);
+        values.put(MoviesContract.Movie.POPULARITY, 14.4);
         return values;
     }
 }

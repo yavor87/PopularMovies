@@ -1,6 +1,7 @@
 package com.yavor.popularmovies;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.yavor.popularmovies.services.MoviesService;
 import com.yavor.popularmovies.utils.MovieDBUtils;
 
 import java.util.List;
@@ -78,7 +80,11 @@ public class MoviesFragment extends Fragment {
         String sort_pref = prefs.getString(getResources().getString(R.string.pref_sort_key),
                 getResources().getString(R.string.pref_sort_popularity));
 
-        new FetchMoviesTask().execute(sort_pref);
+        Intent updateMovies = new Intent(getActivity(), MoviesService.class);
+        updateMovies.putExtra(MoviesService.QUERY_SORT_ORDER, sort_pref);
+        getActivity().startService(updateMovies);
+
+//        new FetchMoviesTask().execute(sort_pref);
     }
 
     class FetchMoviesTask extends AsyncTask<String, Void, List<MovieDb>> {

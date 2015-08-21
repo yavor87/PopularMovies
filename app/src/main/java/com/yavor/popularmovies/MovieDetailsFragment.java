@@ -84,11 +84,11 @@ public class MovieDetailsFragment extends Fragment {
         }
 
         // Year
-        TextView yearView = (TextView) rootView.findViewById(R.id.movie_year);
-        String releaseYear = MovieDBUtils.getReleaseYear(movie.getReleaseDate());
-        if (releaseYear != null) {
-            yearView.setText(releaseYear);
-        }
+//        TextView yearView = (TextView) rootView.findViewById(R.id.movie_year);
+//        String releaseYear = MovieDBUtils.getReleaseYear(movie.getReleaseDate());
+//        if (releaseYear != null) {
+//            yearView.setText(releaseYear);
+//        }
 
         // Duration
         TextView durationView = (TextView) rootView.findViewById(R.id.movie_duration);

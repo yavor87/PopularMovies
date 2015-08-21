@@ -31,6 +31,8 @@ public final class MoviesContract {
 
         public static final String VOTEAVERAGE = "voteAverage";
 
+        public static final String POPULARITY = "popularity";
+
         public static final String OVERVIEW = "overview";
     }
 

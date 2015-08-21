@@ -10,8 +10,6 @@ import android.util.Log;
 import com.yavor.popularmovies.BuildConfig;
 
 public class MoviesDBHelper extends SQLiteOpenHelper {
-    private static final String LOG_TAG = MoviesDBHelper.class.getSimpleName();
-
     static final String DATABASE_FILE_NAME = "movies.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -23,6 +21,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + MoviesContract.Movie.RUNTIME + " INTEGER, "
             + MoviesContract.Movie.POSTERPATH + " TEXT, "
             + MoviesContract.Movie.VOTEAVERAGE + " REAL, "
+            + MoviesContract.Movie.POPULARITY + " REAL, "
             + MoviesContract.Movie.OVERVIEW + " TEXT "
             + " );";
 
@@ -59,7 +58,6 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        if (BuildConfig.DEBUG) Log.d(LOG_TAG, "onCreate");
         db.execSQL(SQL_CREATE_TABLE_MOVIE);
         db.execSQL(SQL_CREATE_TABLE_MOVIEREVIEW);
         db.execSQL(SQL_CREATE_TABLE_MOVIETRAILER);
@@ -71,7 +69,6 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
         if (!db.isReadOnly()) {
             setForeignKeyConstraintsEnabled(db);
         }
-        if (BuildConfig.DEBUG) Log.d(LOG_TAG, "onOpen");
     }
 
     private void setForeignKeyConstraintsEnabled(SQLiteDatabase db) {
