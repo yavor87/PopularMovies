@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 import com.yavor.popularmovies.utils.MovieDBUtils;
@@ -59,6 +61,17 @@ public class MovieDetailsFragment extends Fragment {
 
     private void bindView(View rootView, MovieDb movie) {
         Context context = getActivity();
+
+        // Favourite
+        boolean isFavourite = false; // TODO: Get favourite value
+        ToggleButton favouriteButton = (ToggleButton) rootView.findViewById(R.id.movie_favourite);
+        favouriteButton.setChecked(isFavourite);
+        favouriteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                onToggleFavourite(isChecked);
+            }
+        });
 
         ImageView posterView = (ImageView) rootView.findViewById(R.id.movie_posterView);
 
@@ -167,6 +180,10 @@ public class MovieDetailsFragment extends Fragment {
             emptyReviews.setVisibility(View.VISIBLE);
             reviewsList.setVisibility(View.GONE);
         }
+    }
+
+    private void onToggleFavourite(boolean isFavourite) {
+        Log.v(LOG_TAG, "Toggle favourite");
     }
 
     private class FetchMovieInfoTask extends AsyncTask<Integer, Void, MovieDb> {
