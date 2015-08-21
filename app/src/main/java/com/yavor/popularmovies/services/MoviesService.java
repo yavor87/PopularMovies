@@ -54,7 +54,6 @@ public class MoviesService extends IntentService {
             for (MovieDb movie : page) {
                 fetchFullMovie(api, movie.getId());
             }
-            // TODO: store current popular movies
         } catch (MovieDbException e) {
             Log.e(LOG_TAG, "Unable to get movie data", e);
         }

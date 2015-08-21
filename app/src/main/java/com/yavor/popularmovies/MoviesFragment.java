@@ -92,6 +92,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     private void updateMovies() {
+        // TODO: Find out why after changing sort preference this data is not updated
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort_pref = prefs.getString(getResources().getString(R.string.pref_sort_key),
                 getResources().getString(R.string.pref_sort_popularity));
