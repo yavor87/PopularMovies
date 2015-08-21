@@ -8,10 +8,24 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements MoviesFragment.OnMovieSelectedListener {
 
+    private static final String DETAILFRAGMENT_TAG = "details_fragment";
+    private boolean mTwoPane;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (findViewById(R.id.movies_detail_fragment_container) != null) {
+            mTwoPane = true;
+            if (savedInstanceState == null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.movies_detail_fragment_container, new MovieDetailsFragment(), DETAILFRAGMENT_TAG)
+                        .commit();
+            }
+        } else {
+            mTwoPane = false;
+        }
     }
 
 
@@ -40,8 +54,17 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.On
 
     @Override
     public void movieSelected(int movieId) {
-        Intent showDetailsIntent = new Intent(this, MovieDetailsActivity.class);
-        showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ID_ARG, movieId);
-        startActivity(showDetailsIntent);
+        if (mTwoPane) {
+            MovieDetailsFragment fragment = MovieDetailsFragment.createInstance(movieId);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.movies_detail_fragment_container, fragment, DETAILFRAGMENT_TAG)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            Intent showDetailsIntent = new Intent(this, MovieDetailsActivity.class);
+            showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ID_ARG, movieId);
+            startActivity(showDetailsIntent);
+        }
     }
 }
