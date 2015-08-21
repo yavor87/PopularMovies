@@ -12,7 +12,6 @@ public class MovieDBUtils {
     public static final String POSTER_GET_BASAE_URL = "http://image.tmdb.org/t/p/";
     public static final String REQUEST_SIZE = "w185";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-    public static final SimpleDateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy", Locale.ENGLISH);
 
     public static String getFullPosterUrl(String posterPath, String size) {
         return Uri.parse(POSTER_GET_BASAE_URL).buildUpon()

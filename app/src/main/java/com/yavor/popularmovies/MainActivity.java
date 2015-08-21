@@ -1,6 +1,7 @@
 package com.yavor.popularmovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -53,9 +54,9 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.On
     }
 
     @Override
-    public void movieSelected(int movieId) {
+    public void movieSelected(Uri selectedMovie) {
         if (mTwoPane) {
-            MovieDetailsFragment fragment = MovieDetailsFragment.createInstance(movieId);
+            MovieDetailsFragment fragment = MovieDetailsFragment.createInstance(selectedMovie);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.movies_detail_fragment_container, fragment, DETAILFRAGMENT_TAG)
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.On
                     .commit();
         } else {
             Intent showDetailsIntent = new Intent(this, MovieDetailsActivity.class);
-            showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ID_ARG, movieId);
+            showDetailsIntent.putExtra(MovieDetailsActivity.MOVIE_ARG, selectedMovie);
             startActivity(showDetailsIntent);
         }
     }
