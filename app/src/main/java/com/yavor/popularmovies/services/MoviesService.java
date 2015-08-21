@@ -67,6 +67,7 @@ public class MoviesService extends IntentService {
             movie = api.getMovies().getMovie(movieId, null,
                     TmdbMovies.MovieMethod.reviews, TmdbMovies.MovieMethod.videos);
         } catch (MovieDbException e) {
+            // TODO: Find out why the service is crashing
             Log.e(LOG_TAG, "Unable to fetch movie details", e);
             return;
         }

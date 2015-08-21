@@ -202,19 +202,23 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
     private void onToggleFavourite(boolean isFavourite) {
         Log.v(LOG_TAG, "Toggle favourite");
+        // TODO: Implement favourite
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (mMovieUri != null) {
+            // TODO: Add projections
             switch (id) {
                 case DETAILS_LOADER:
                     return new CursorLoader(getActivity(), mMovieUri, null, null, null, null);
                 case REVIEWS_LOADER:
+                    // TODO: Think of uri
                     return new CursorLoader(getActivity(), MoviesContract.Review.CONTENT_URI,
                             null, MoviesContract.Review.MOVIE_ID + "=?",
                             new String[] {String.valueOf(ContentUris.parseId(mMovieUri))}, null);
                 case TRAILERS_LOADER:
+                    // TODO: Think of uri
                     return new CursorLoader(getActivity(), MoviesContract.Trailer.CONTENT_URI,
                             null, MoviesContract.Review.MOVIE_ID + "=?",
                             new String[] {String.valueOf(ContentUris.parseId(mMovieUri))}, null);

@@ -72,7 +72,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onStart() {
         super.onStart();
-        //updateMovies();
+        updateMovies();
     }
 
     @Override
