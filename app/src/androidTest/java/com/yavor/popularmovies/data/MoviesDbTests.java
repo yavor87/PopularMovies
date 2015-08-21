@@ -56,13 +56,55 @@ public class MoviesDbTests extends AndroidTestCase {
         assertEquals(id1, id2);
     }
 
+    public void testInsert_Movie_Twice_WithReviews() {
+        // Arrange
+        ContentValues values = getTestMovie();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long id1 = db.insertOrThrow(MoviesContract.Movie.TABLE_NAME, null, values);
+        db.insertOrThrow(MoviesContract.Review.TABLE_NAME, null, getTestReview());
+
+        // Act
+        long id2 = db.insertOrThrow(MoviesContract.Movie.TABLE_NAME, null, values);
+
+        // Assert
+        assertEquals(1, id1);
+        assertEquals(id1, id2);
+    }
+
+    public void testInsert_Movie_Twice_WithTrailers() {
+        // Arrange
+        ContentValues values = getTestMovie();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long id1 = db.insertOrThrow(MoviesContract.Movie.TABLE_NAME, null, values);
+        db.insertOrThrow(MoviesContract.Trailer.TABLE_NAME, null, getTestTrailer());
+
+        // Act
+        long id2 = db.insertOrThrow(MoviesContract.Movie.TABLE_NAME, null, values);
+
+        // Assert
+        assertEquals(1, id1);
+        assertEquals(id1, id2);
+    }
+
+    public void testInsert_Movie_Twice_WithReviewsAndTrailers() {
+        // Arrange
+        ContentValues values = getTestMovie();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long id1 = db.insertOrThrow(MoviesContract.Movie.TABLE_NAME, null, values);
+        db.insertOrThrow(MoviesContract.Review.TABLE_NAME, null, getTestReview());
+        db.insertOrThrow(MoviesContract.Trailer.TABLE_NAME, null, getTestTrailer());
+
+        // Act
+        long id2 = db.insertOrThrow(MoviesContract.Movie.TABLE_NAME, null, values);
+
+        // Assert
+        assertEquals(1, id1);
+        assertEquals(id1, id2);
+    }
+
     public void testInsert_Review() {
         // Arrange
-        ContentValues values = new ContentValues();
-        values.put(MoviesContract.Review.AUTHOR, "me");
-        values.put(MoviesContract.Review.CONTENT, "test review");
-        values.put(MoviesContract.Review.MOVIE_ID, 1);
-        values.put(MoviesContract.Review.MOVIEDB_ID, "sfndsl2kamafla");
+        ContentValues values = getTestReview();
 
         // Act
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -77,11 +119,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
     public void testInsert_Review_Twice() {
         // Arrange
-        ContentValues values = new ContentValues();
-        values.put(MoviesContract.Review.AUTHOR, "me");
-        values.put(MoviesContract.Review.CONTENT, "test review");
-        values.put(MoviesContract.Review.MOVIE_ID, 1);
-        values.put(MoviesContract.Review.MOVIEDB_ID, "sfndsl2kamafla");
+        ContentValues values = getTestReview();
 
         // Act
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -100,12 +138,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
     public void testInsert_Trailer() {
         // Arrange
-        ContentValues values = new ContentValues();
-        values.put(MoviesContract.Trailer.KEY, "sfswsfs");
-        values.put(MoviesContract.Trailer.SITE, "test");
-        values.put(MoviesContract.Trailer.NAME, "test trailer");
-        values.put(MoviesContract.Trailer.MOVIE_ID, 1);
-        values.put(MoviesContract.Trailer.MOVIEDB_ID, "sfndsl2kamafla");
+        ContentValues values = getTestTrailer();
 
         // Act
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -120,12 +153,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
     public void testInsert_Trailer_Twice() {
         // Arrange
-        ContentValues values = new ContentValues();
-        values.put(MoviesContract.Trailer.KEY, "sfswsfs");
-        values.put(MoviesContract.Trailer.SITE, "test");
-        values.put(MoviesContract.Trailer.NAME, "test trailer");
-        values.put(MoviesContract.Trailer.MOVIE_ID, 1);
-        values.put(MoviesContract.Trailer.MOVIEDB_ID, "sfndsl2kamafla");
+        ContentValues values = getTestTrailer();
 
         // Act
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -152,6 +180,25 @@ public class MoviesDbTests extends AndroidTestCase {
         values.put(MoviesContract.Movie.RUNTIME, 120);
         values.put(MoviesContract.Movie.VOTEAVERAGE, 4.4);
         values.put(MoviesContract.Movie.POPULARITY, 14.4);
+        return values;
+    }
+
+    private ContentValues getTestReview() {
+        ContentValues values = new ContentValues();
+        values.put(MoviesContract.Review.AUTHOR, "me");
+        values.put(MoviesContract.Review.CONTENT, "test review");
+        values.put(MoviesContract.Review.MOVIE_ID, 1);
+        values.put(MoviesContract.Review.MOVIEDB_ID, "sfndsl2kamafla");
+        return values;
+    }
+
+    private ContentValues getTestTrailer() {
+        ContentValues values = new ContentValues();
+        values.put(MoviesContract.Trailer.KEY, "sfswsfs");
+        values.put(MoviesContract.Trailer.SITE, "test");
+        values.put(MoviesContract.Trailer.NAME, "test trailer");
+        values.put(MoviesContract.Trailer.MOVIE_ID, 1);
+        values.put(MoviesContract.Trailer.MOVIEDB_ID, "sfndsl2kamafla");
         return values;
     }
 }

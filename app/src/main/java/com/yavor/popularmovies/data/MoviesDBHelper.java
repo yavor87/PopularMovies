@@ -32,8 +32,9 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + MoviesContract.Review.MOVIEDB_ID + " TEXT NOT NULL, "
             + MoviesContract.Review.AUTHOR + " TEXT NOT NULL, "
             + MoviesContract.Review.CONTENT + " TEXT NOT NULL "
-            + ", CONSTRAINT fk_movie_id FOREIGN KEY (" + MoviesContract.Review.MOVIE_ID
-            + ") REFERENCES movie ("+ MoviesContract.Movie._ID + ") ON DELETE RESTRICT"
+            + ", FOREIGN KEY (" + MoviesContract.Review.MOVIE_ID
+            + ") REFERENCES " + MoviesContract.Movie.TABLE_NAME
+            + " (" + MoviesContract.Movie._ID + ") "
             + ", UNIQUE (" + MoviesContract.Review.MOVIEDB_ID
             + ") ON CONFLICT REPLACE"
             + ");";
@@ -46,8 +47,9 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + MoviesContract.Trailer.NAME + " TEXT NOT NULL, "
             + MoviesContract.Trailer.SITE + " TEXT NOT NULL, "
             + MoviesContract.Trailer.KEY + " TEXT NOT NULL "
-            + ", CONSTRAINT fk_movie_id FOREIGN KEY (" + MoviesContract.Trailer.MOVIE_ID
-            + ") REFERENCES movie ("+ MoviesContract.Movie._ID + ") ON DELETE RESTRICT"
+            + ", FOREIGN KEY (" + MoviesContract.Trailer.MOVIE_ID
+            + ") REFERENCES " + MoviesContract.Movie.TABLE_NAME
+            + " (" + MoviesContract.Movie._ID + ") "
             + ", UNIQUE (" + MoviesContract.Trailer.MOVIEDB_ID
             + ") ON CONFLICT REPLACE"
             + ");";
