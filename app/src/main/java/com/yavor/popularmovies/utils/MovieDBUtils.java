@@ -12,6 +12,7 @@ public class MovieDBUtils {
     public static final String POSTER_GET_BASAE_URL = "http://image.tmdb.org/t/p/";
     public static final String REQUEST_SIZE = "w185";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    public static final int MAX_ITEMS = 20;
 
     public static String getFullPosterUrl(String posterPath, String size) {
         return Uri.parse(POSTER_GET_BASAE_URL).buildUpon()
@@ -33,5 +34,11 @@ public class MovieDBUtils {
             }
         }
         return null;
+    }
+
+    public static String createSortOrder(String preference) {
+        String[] components = preference.split("\\.");
+        return components[0] + " " + components[1].toUpperCase() + " LIMIT " + MAX_ITEMS;
+
     }
 }

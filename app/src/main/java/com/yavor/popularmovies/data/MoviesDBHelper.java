@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.util.Log;
-
-import com.yavor.popularmovies.BuildConfig;
 
 public class MoviesDBHelper extends SQLiteOpenHelper {
     static final String DATABASE_FILE_NAME = "movies.db";
@@ -17,10 +14,10 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + MoviesContract.Movie.TABLE_NAME + " ( "
             + MoviesContract.Movie._ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, "
             + MoviesContract.Movie.TITLE + " TEXT NOT NULL, "
-            + MoviesContract.Movie.RELEASEDATE + " INTEGER, "
+            + MoviesContract.Movie.RELEASE_DATE + " INTEGER, "
             + MoviesContract.Movie.RUNTIME + " INTEGER, "
-            + MoviesContract.Movie.POSTERPATH + " TEXT, "
-            + MoviesContract.Movie.VOTEAVERAGE + " REAL, "
+            + MoviesContract.Movie.POSTER_PATH + " TEXT, "
+            + MoviesContract.Movie.VOTE_AVERAGE + " REAL, "
             + MoviesContract.Movie.POPULARITY + " REAL, "
             + MoviesContract.Movie.OVERVIEW + " TEXT "
             + " );";

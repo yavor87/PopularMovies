@@ -20,6 +20,7 @@ import android.widget.GridView;
 
 import com.yavor.popularmovies.data.MoviesContract;
 import com.yavor.popularmovies.services.MoviesService;
+import com.yavor.popularmovies.utils.MovieDBUtils;
 
 public class MoviesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     public MoviesFragment() {
@@ -33,7 +34,9 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     private static String[] PROJECTION = new String[] {
             MoviesContract.Movie._ID,
             MoviesContract.Movie.POSTER_PATH,
-            MoviesContract.Movie.TITLE
+            MoviesContract.Movie.TITLE,
+            MoviesContract.Movie.POPULARITY,
+            MoviesContract.Movie.VOTE_AVERAGE
     };
 
     static int MOVIE_ID = 0;
@@ -100,8 +103,12 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String sort_pref = prefs.getString(getResources().getString(R.string.pref_sort_key),
+                getResources().getString(R.string.pref_sort_popularity));
+        String sorting = MovieDBUtils.createSortOrder(sort_pref);
         return new CursorLoader(getActivity(), MoviesContract.Movie.CONTENT_URI,
-                PROJECTION, null, null, null); // TODO: Add sorting and filtering
+                PROJECTION, null, null, sorting);
     }
 
     @Override
