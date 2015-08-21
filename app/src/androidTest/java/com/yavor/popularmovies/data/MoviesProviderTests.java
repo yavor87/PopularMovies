@@ -79,10 +79,10 @@ public class MoviesProviderTests extends ApplicationTest {
         assertEquals(1, c.getInt(c.getColumnIndex(MoviesContract.Movie._ID)));
         assertEquals(values.get(MoviesContract.Movie.TITLE), c.getString(c.getColumnIndex(MoviesContract.Movie.TITLE)));
         assertEquals(values.get(MoviesContract.Movie.OVERVIEW), c.getString(c.getColumnIndex(MoviesContract.Movie.OVERVIEW)));
-        assertEquals(values.get(MoviesContract.Movie.POSTERPATH), c.getString(c.getColumnIndex(MoviesContract.Movie.POSTERPATH)));
-        assertEquals(values.get(MoviesContract.Movie.RELEASEDATE), c.getLong(c.getColumnIndex(MoviesContract.Movie.RELEASEDATE)));
+        assertEquals(values.get(MoviesContract.Movie.POSTER_PATH), c.getString(c.getColumnIndex(MoviesContract.Movie.POSTER_PATH)));
+        assertEquals(values.get(MoviesContract.Movie.RELEASE_DATE), c.getLong(c.getColumnIndex(MoviesContract.Movie.RELEASE_DATE)));
         assertEquals(values.get(MoviesContract.Movie.RUNTIME), c.getInt(c.getColumnIndex(MoviesContract.Movie.RUNTIME)));
-        assertEquals(values.getAsFloat(MoviesContract.Movie.VOTEAVERAGE), c.getFloat(c.getColumnIndex(MoviesContract.Movie.VOTEAVERAGE)));
+        assertEquals(values.getAsFloat(MoviesContract.Movie.VOTE_AVERAGE), c.getFloat(c.getColumnIndex(MoviesContract.Movie.VOTE_AVERAGE)));
 
         c.close();
     }
@@ -101,10 +101,10 @@ public class MoviesProviderTests extends ApplicationTest {
         assertEquals(1, c.getInt(c.getColumnIndex(MoviesContract.Movie._ID)));
         assertEquals(values.get(MoviesContract.Movie.TITLE), c.getString(c.getColumnIndex(MoviesContract.Movie.TITLE)));
         assertEquals(values.get(MoviesContract.Movie.OVERVIEW), c.getString(c.getColumnIndex(MoviesContract.Movie.OVERVIEW)));
-        assertEquals(values.get(MoviesContract.Movie.POSTERPATH), c.getString(c.getColumnIndex(MoviesContract.Movie.POSTERPATH)));
-        assertEquals(values.get(MoviesContract.Movie.RELEASEDATE), c.getLong(c.getColumnIndex(MoviesContract.Movie.RELEASEDATE)));
+        assertEquals(values.get(MoviesContract.Movie.POSTER_PATH), c.getString(c.getColumnIndex(MoviesContract.Movie.POSTER_PATH)));
+        assertEquals(values.get(MoviesContract.Movie.RELEASE_DATE), c.getLong(c.getColumnIndex(MoviesContract.Movie.RELEASE_DATE)));
         assertEquals(values.get(MoviesContract.Movie.RUNTIME), c.getInt(c.getColumnIndex(MoviesContract.Movie.RUNTIME)));
-        assertEquals(values.getAsFloat(MoviesContract.Movie.VOTEAVERAGE), c.getFloat(c.getColumnIndex(MoviesContract.Movie.VOTEAVERAGE)));
+        assertEquals(values.getAsFloat(MoviesContract.Movie.VOTE_AVERAGE), c.getFloat(c.getColumnIndex(MoviesContract.Movie.VOTE_AVERAGE)));
         assertEquals(values.getAsFloat(MoviesContract.Movie.POPULARITY), c.getFloat(c.getColumnIndex(MoviesContract.Movie.POPULARITY)));
 
         c.close();
@@ -115,10 +115,10 @@ public class MoviesProviderTests extends ApplicationTest {
         values.put(MoviesContract.Movie._ID, 1);
         values.put(MoviesContract.Movie.TITLE, "Test movie");
         values.put(MoviesContract.Movie.OVERVIEW, "Test movie");
-        values.put(MoviesContract.Movie.POSTERPATH, "tt");
-        values.put(MoviesContract.Movie.RELEASEDATE, System.currentTimeMillis());
+        values.put(MoviesContract.Movie.POSTER_PATH, "tt");
+        values.put(MoviesContract.Movie.RELEASE_DATE, System.currentTimeMillis());
         values.put(MoviesContract.Movie.RUNTIME, 120);
-        values.put(MoviesContract.Movie.VOTEAVERAGE, 4.4);
+        values.put(MoviesContract.Movie.VOTE_AVERAGE, 4.4);
         values.put(MoviesContract.Movie.POPULARITY, 14.4);
         return values;
     }

@@ -175,10 +175,10 @@ public class MoviesDbTests extends AndroidTestCase {
         values.put(MoviesContract.Movie._ID, 1);
         values.put(MoviesContract.Movie.TITLE, "Test movie");
         values.put(MoviesContract.Movie.OVERVIEW, "Test movie");
-        values.put(MoviesContract.Movie.POSTERPATH, "tt");
-        values.put(MoviesContract.Movie.RELEASEDATE, System.currentTimeMillis());
+        values.put(MoviesContract.Movie.POSTER_PATH, "tt");
+        values.put(MoviesContract.Movie.RELEASE_DATE, System.currentTimeMillis());
         values.put(MoviesContract.Movie.RUNTIME, 120);
-        values.put(MoviesContract.Movie.VOTEAVERAGE, 4.4);
+        values.put(MoviesContract.Movie.VOTE_AVERAGE, 4.4);
         values.put(MoviesContract.Movie.POPULARITY, 14.4);
         return values;
     }

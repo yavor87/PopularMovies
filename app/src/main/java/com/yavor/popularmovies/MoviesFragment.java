@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
 
     private static String[] PROJECTION = new String[] {
             MoviesContract.Movie._ID,
-            MoviesContract.Movie.POSTERPATH,
+            MoviesContract.Movie.POSTER_PATH,
             MoviesContract.Movie.TITLE
     };
 

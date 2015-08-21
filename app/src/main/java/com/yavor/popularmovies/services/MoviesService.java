@@ -89,13 +89,13 @@ public class MoviesService extends IntentService {
         values.put(MoviesContract.Movie._ID, movie.getId());
         values.put(MoviesContract.Movie.TITLE, movie.getTitle());
         values.put(MoviesContract.Movie.OVERVIEW, movie.getOverview());
-        values.put(MoviesContract.Movie.POSTERPATH, movie.getPosterPath());
+        values.put(MoviesContract.Movie.POSTER_PATH, movie.getPosterPath());
         values.put(MoviesContract.Movie.RUNTIME, movie.getRuntime());
         Date releaseDate = MovieDBUtils.parseDate(movie.getReleaseDate());
         if (releaseDate != null) {
-            values.put(MoviesContract.Movie.RELEASEDATE, releaseDate.getTime());
+            values.put(MoviesContract.Movie.RELEASE_DATE, releaseDate.getTime());
         }
-        values.put(MoviesContract.Movie.VOTEAVERAGE, movie.getVoteAverage());
+        values.put(MoviesContract.Movie.VOTE_AVERAGE, movie.getVoteAverage());
         values.put(MoviesContract.Movie.POPULARITY, movie.getPopularity());
         return values;
     }

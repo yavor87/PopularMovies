@@ -103,7 +103,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
         // Year
         TextView yearView = (TextView) rootView.findViewById(R.id.movie_year);
-        Date releaseDate = new Date(data.getLong(data.getColumnIndex(MoviesContract.Movie.RELEASEDATE)));
+        Date releaseDate = new Date(data.getLong(data.getColumnIndex(MoviesContract.Movie.RELEASE_DATE)));
         yearView.setText(YEAR_FORMAT.format(releaseDate));
 
         // Duration
@@ -114,7 +114,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         }
 
         // PosterposterView
-        String posterPath = data.getString(data.getColumnIndex(MoviesContract.Movie.POSTERPATH));
+        String posterPath = data.getString(data.getColumnIndex(MoviesContract.Movie.POSTER_PATH));
         if (posterPath != null && posterPath.length() > 0) {
             String fullPosterPath = MovieDBUtils.getFullPosterUrl(posterPath);
             Picasso.with(context)
@@ -124,7 +124,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
         // Rating
         TextView ratingView = (TextView) rootView.findViewById(R.id.movie_rating);
-        ratingView.setText(String.format("%.1f/10", data.getFloat(data.getColumnIndex(MoviesContract.Movie.VOTEAVERAGE))));
+        ratingView.setText(String.format("%.1f/10", data.getFloat(data.getColumnIndex(MoviesContract.Movie.VOTE_AVERAGE))));
 
         // Overview
         TextView overviewView = (TextView) rootView.findViewById(R.id.movie_overview);

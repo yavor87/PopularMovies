@@ -23,13 +23,13 @@ public final class MoviesContract {
 
         public static final String TITLE = "title";
 
-        public static final String RELEASEDATE = "releaseDate";
+        public static final String RELEASE_DATE = "release_date";
 
         public static final String RUNTIME = "runtime";
 
-        public static final String POSTERPATH = "posterPath";
+        public static final String POSTER_PATH = "poster_path";
 
-        public static final String VOTEAVERAGE = "voteAverage";
+        public static final String VOTE_AVERAGE = "vote_average";
 
         public static final String POPULARITY = "popularity";
 
