@@ -79,12 +79,7 @@ public class MoviesProvider extends ContentProvider {
         }
 
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        long rowId = -1;
-        try {
-            rowId = db.insertOrThrow(table, null, values);
-        } finally {
-            db.close();
-        }
+        long rowId = db.insertOrThrow(table, null, values);
         if (rowId == -1)
             throw new SQLException("Failed to insert row into " + uri);
         getContext().getContentResolver().notifyChange(uri, null);
@@ -124,7 +119,6 @@ public class MoviesProvider extends ContentProvider {
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
-            db.close();
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return returnCount;
@@ -151,12 +145,7 @@ public class MoviesProvider extends ContentProvider {
         }
 
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        int rowsUpdated = -1;
-        try {
-            rowsUpdated = db.update(table, values, selection, selectionArgs);
-        } finally {
-            db.close();
-        }
+        int rowsUpdated = db.update(table, values, selection, selectionArgs);
         if (rowsUpdated > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
@@ -183,12 +172,7 @@ public class MoviesProvider extends ContentProvider {
         }
 
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        int rowsDeleted = -1;
-        try {
-            rowsDeleted = db.delete(table, selection, selectionArgs);
-        } finally {
-            db.close();
-        }
+        int rowsDeleted = db.delete(table, selection, selectionArgs);
         if (rowsDeleted > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
