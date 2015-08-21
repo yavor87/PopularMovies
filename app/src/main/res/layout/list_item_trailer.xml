@@ -9,6 +9,7 @@
     android:paddingBottom="3dp">
 
     <com.yavor.popularmovies.views.YoutubePlayView
+        android:id="@+id/item_trailer_play"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"

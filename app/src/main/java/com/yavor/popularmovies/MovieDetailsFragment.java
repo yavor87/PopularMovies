@@ -1,9 +1,9 @@
 package com.yavor.popularmovies;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.yavor.popularmovies.utils.MovieDBUtils;
+import com.yavor.popularmovies.views.YoutubePlayView;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
@@ -120,6 +121,13 @@ public class MovieDetailsFragment extends Fragment {
         if (movie.getVideos() != null && !movie.getVideos().isEmpty()) {
             for (Video trailer : movie.getVideos()) {
                 View view = inflater.inflate(R.layout.list_item_trailer, trailersList, false);
+
+                // Trailer video
+                YoutubePlayView playView = (YoutubePlayView) view.findViewById(R.id.item_trailer_play);
+                Uri uri = YoutubePlayView.createVideoPath(trailer.getSite(), trailer.getKey());
+                if (uri != null) {
+                    playView.setVideoPath(uri);
+                }
 
                 // Trailer name
                 TextView trailerView = (TextView) view.findViewById(R.id.item_trailer_name);
