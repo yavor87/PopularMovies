@@ -1,5 +1,6 @@
 package com.yavor.popularmovies;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -141,7 +142,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         View trailersContainer = rootView.findViewById(R.id.trailers_container);
         LinearLayout trailersList = (LinearLayout) trailersContainer.findViewById(R.id.trailers_list);
         View emptyTrailers = trailersContainer.findViewById(R.id.trailers_empty);
-        if (data.isBeforeFirst()) {
+        if (!data.isAfterLast()) {
             while (data.moveToNext()) {
                 View view = inflater.inflate(R.layout.list_item_trailer, trailersList, false);
 
@@ -175,7 +176,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         View reviewsContainer = rootView.findViewById(R.id.reviews_container);
         LinearLayout reviewsList = (LinearLayout) reviewsContainer.findViewById(R.id.reviews_list);
         View emptyReviews = reviewsContainer.findViewById(R.id.reviews_empty);
-        if (data.isBeforeFirst()) {
+        if (!data.isAfterLast()) {
             while (data.moveToNext()) {
                 View view = inflater.inflate(R.layout.list_item_review, reviewsList, false);
 
@@ -209,10 +210,14 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
             switch (id) {
                 case DETAILS_LOADER:
                     return new CursorLoader(getActivity(), mMovieUri, null, null, null, null);
-//                case REVIEWS_LOADER:
-//                    return new CursorLoader(getActivity(), mMovieUri, null, null, null, null);
-//                case TRAILERS_LOADER:
-//                    return new CursorLoader(getActivity(), mMovieUri, null, null, null, null);
+                case REVIEWS_LOADER:
+                    return new CursorLoader(getActivity(), MoviesContract.Review.CONTENT_URI,
+                            null, MoviesContract.Review.MOVIE_ID + "=?",
+                            new String[] {String.valueOf(ContentUris.parseId(mMovieUri))}, null);
+                case TRAILERS_LOADER:
+                    return new CursorLoader(getActivity(), MoviesContract.Trailer.CONTENT_URI,
+                            null, MoviesContract.Review.MOVIE_ID + "=?",
+                            new String[] {String.valueOf(ContentUris.parseId(mMovieUri))}, null);
             }
         }
         return null;
