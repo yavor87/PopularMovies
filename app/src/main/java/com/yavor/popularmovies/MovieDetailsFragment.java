@@ -141,6 +141,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View trailersContainer = rootView.findViewById(R.id.trailers_container);
         LinearLayout trailersList = (LinearLayout) trailersContainer.findViewById(R.id.trailers_list);
+        trailersList.removeAllViews();
         View emptyTrailers = trailersContainer.findViewById(R.id.trailers_empty);
         if (!data.isAfterLast()) {
             while (data.moveToNext()) {
@@ -175,6 +176,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View reviewsContainer = rootView.findViewById(R.id.reviews_container);
         LinearLayout reviewsList = (LinearLayout) reviewsContainer.findViewById(R.id.reviews_list);
+        reviewsList.removeAllViews();
         View emptyReviews = reviewsContainer.findViewById(R.id.reviews_empty);
         if (!data.isAfterLast()) {
             while (data.moveToNext()) {
