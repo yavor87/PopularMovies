@@ -113,7 +113,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
             durationView.setText(String.format(getString(R.string.runtime_text_format), runtime));
         }
 
-        // PosterposterView
+        // Poster
         String posterPath = data.getString(data.getColumnIndex(MoviesContract.Movie.POSTER_PATH));
         if (posterPath != null && posterPath.length() > 0) {
             String fullPosterPath = MovieDBUtils.getFullPosterUrl(posterPath);
