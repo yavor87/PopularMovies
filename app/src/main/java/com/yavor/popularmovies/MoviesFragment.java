@@ -3,11 +3,9 @@ package com.yavor.popularmovies;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -21,16 +19,14 @@ import android.widget.GridView;
 import com.yavor.popularmovies.data.MoviesContract;
 import com.yavor.popularmovies.services.MoviesService;
 import com.yavor.popularmovies.utils.MovieDBUtils;
+import com.yavor.popularmovies.utils.Utility;
 
 public class MoviesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     public MoviesFragment() {
     }
 
-    private MoviesListAdapter mAdapter;
-    private OnMovieSelectedListener mListener;
     private static final String LOG_TAG = MoviesFragment.class.getSimpleName();
     private static final int MOVIES_LOADER = 1;
-
     private static String[] PROJECTION = new String[] {
             MoviesContract.Movie._ID,
             MoviesContract.Movie.POSTER_PATH,
@@ -40,8 +36,19 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     };
 
     static int MOVIE_ID = 0;
+
     static int MOVIE_POSTER_PATH = 1;
     static int MOVIE_TITLE = 2;
+
+    private MoviesListAdapter mAdapter;
+    private OnMovieSelectedListener mListener;
+    private String mSortOrder;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mSortOrder = Utility.getPreferedSortOrder(getActivity());
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -92,24 +99,22 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     private void updateMovies() {
-        // TODO: Find out why after changing sort preference this data is not updated
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sort_pref = prefs.getString(getResources().getString(R.string.pref_sort_key),
-                getResources().getString(R.string.pref_sort_popularity));
-
         Intent updateMovies = new Intent(getActivity(), MoviesService.class);
-        updateMovies.putExtra(MoviesService.QUERY_SORT_ORDER, sort_pref);
+        updateMovies.putExtra(MoviesService.QUERY_SORT_ORDER, mSortOrder);
         getActivity().startService(updateMovies);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sort_pref = prefs.getString(getResources().getString(R.string.pref_sort_key),
-                getResources().getString(R.string.pref_sort_popularity));
-        String sorting = MovieDBUtils.createSortOrder(sort_pref);
+        String sorting = MovieDBUtils.createSortOrder(mSortOrder);
         return new CursorLoader(getActivity(), MoviesContract.Movie.CONTENT_URI,
                 PROJECTION, null, null, sorting);
+    }
+
+    public void onSortOrderChanged(String newSortOrder) {
+        mSortOrder = newSortOrder;
+        updateMovies();
+        getLoaderManager().restartLoader(MOVIES_LOADER, null, this);
     }
 
     @Override

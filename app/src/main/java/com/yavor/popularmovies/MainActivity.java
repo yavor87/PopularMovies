@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.yavor.popularmovies.utils.Utility;
+
 public class MainActivity extends AppCompatActivity implements MoviesFragment.OnMovieSelectedListener {
 
     private static final String DETAILFRAGMENT_TAG = "details_fragment";
     private boolean mTwoPane;
+    private String mSortOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.On
         } else {
             mTwoPane = false;
         }
+        mSortOrder = Utility.getPreferedSortOrder(this);
     }
 
 
@@ -35,6 +39,22 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.On
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String sortOrder = Utility.getPreferedSortOrder(this);
+        if (!sortOrder.equals(mSortOrder)) {
+            mSortOrder = sortOrder;
+
+            MoviesFragment fragment = (MoviesFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_movies_list);
+            if (fragment != null) {
+                fragment.onSortOrderChanged(sortOrder);
+            }
+        }
     }
 
     @Override
