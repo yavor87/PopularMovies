@@ -19,7 +19,8 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + MoviesContract.Movie.POSTER_PATH + " TEXT, "
             + MoviesContract.Movie.VOTE_AVERAGE + " REAL, "
             + MoviesContract.Movie.POPULARITY + " REAL, "
-            + MoviesContract.Movie.OVERVIEW + " TEXT "
+            + MoviesContract.Movie.OVERVIEW + " TEXT, "
+            + MoviesContract.Movie.FAVOURITE + " INTEGER"
             + " );";
 
     private static final String SQL_CREATE_TABLE_MOVIEREVIEW = "CREATE TABLE IF NOT EXISTS "

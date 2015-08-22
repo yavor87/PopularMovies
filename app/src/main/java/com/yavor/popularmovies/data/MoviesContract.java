@@ -34,6 +34,8 @@ public final class MoviesContract {
         public static final String POPULARITY = "popularity";
 
         public static final String OVERVIEW = "overview";
+
+        public static final String FAVOURITE = "is_favourite";
     }
 
     public static final class Review implements BaseColumns {

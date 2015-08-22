@@ -131,12 +131,27 @@ public class MoviesProvider extends ContentProvider {
 
         String table;
         switch (sUriMatcher.match(uri)) {
+            case URI_TYPE_MOVIE_ID: {
+                long id = ContentUris.parseId(uri);
+                selection = MoviesContract.Movie._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(id)};
+            }
             case URI_TYPE_MOVIE:
                 table = MoviesContract.Movie.TABLE_NAME;
                 break;
+            case URI_TYPE_MOVIE_REVIEW_ID: {
+                long id = ContentUris.parseId(uri);
+                selection = MoviesContract.Review._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(id)};
+            }
             case URI_TYPE_MOVIE_REVIEW:
                 table = MoviesContract.Review.TABLE_NAME;
                 break;
+            case URI_TYPE_MOVIE_TRAILER_ID: {
+                long id = ContentUris.parseId(uri);
+                selection = MoviesContract.Trailer._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(id)};
+            }
             case URI_TYPE_MOVIE_TRAILER:
                 table = MoviesContract.Trailer.TABLE_NAME;
                 break;
@@ -156,14 +171,30 @@ public class MoviesProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         if (BuildConfig.DEBUG)
             Log.d(TAG, "delete uri=" + uri + " selection=" + selection + " selectionArgs=" + Arrays.toString(selectionArgs));
+
         String table;
         switch (sUriMatcher.match(uri)) {
+            case URI_TYPE_MOVIE_ID: {
+                long id = ContentUris.parseId(uri);
+                selection = MoviesContract.Movie._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(id)};
+            }
             case URI_TYPE_MOVIE:
                 table = MoviesContract.Movie.TABLE_NAME;
                 break;
+            case URI_TYPE_MOVIE_REVIEW_ID: {
+                long id = ContentUris.parseId(uri);
+                selection = MoviesContract.Review._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(id)};
+            }
             case URI_TYPE_MOVIE_REVIEW:
                 table = MoviesContract.Review.TABLE_NAME;
                 break;
+            case URI_TYPE_MOVIE_TRAILER_ID: {
+                long id = ContentUris.parseId(uri);
+                selection = MoviesContract.Trailer._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(id)};
+            }
             case URI_TYPE_MOVIE_TRAILER:
                 table = MoviesContract.Trailer.TABLE_NAME;
                 break;

@@ -1,6 +1,7 @@
 package com.yavor.popularmovies;
 
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -90,7 +91,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         View rootView = getView();
 
         // Favourite
-        boolean isFavourite = false; // TODO: Get favourite value
+        boolean isFavourite = data.getShort(data.getColumnIndex(MoviesContract.Movie.FAVOURITE)) > 0;
         ToggleButton favouriteButton = (ToggleButton) rootView.findViewById(R.id.movie_favourite);
         favouriteButton.setChecked(isFavourite);
         favouriteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -147,23 +148,22 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
     private void onToggleFavourite(boolean isFavourite) {
         Log.v(LOG_TAG, "Toggle favourite");
-        // TODO: Implement favourite
+        ContentValues values = new ContentValues();
+        values.put(MoviesContract.Movie.FAVOURITE, isFavourite ? 1 : 0);
+        getActivity().getContentResolver().update(mMovieUri, values, null, null);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (mMovieUri != null) {
-            // TODO: Add projections
             switch (id) {
                 case DETAILS_LOADER:
                     return new CursorLoader(getActivity(), mMovieUri, null, null, null, null);
                 case REVIEWS_LOADER:
-                    // TODO: Think of uri
                     return new CursorLoader(getActivity(), MoviesContract.Review.CONTENT_URI,
                             null, MoviesContract.Review.MOVIE_ID + "=?",
                             new String[] {String.valueOf(ContentUris.parseId(mMovieUri))}, null);
                 case TRAILERS_LOADER:
-                    // TODO: Think of uri
                     return new CursorLoader(getActivity(), MoviesContract.Trailer.CONTENT_URI,
                             null, MoviesContract.Review.MOVIE_ID + "=?",
                             new String[] {String.valueOf(ContentUris.parseId(mMovieUri))}, null);
