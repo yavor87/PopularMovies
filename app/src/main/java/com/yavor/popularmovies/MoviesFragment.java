@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.yavor.popularmovies.adapters.MoviesListAdapter;
 import com.yavor.popularmovies.data.MoviesContract;
 import com.yavor.popularmovies.services.MoviesService;
 import com.yavor.popularmovies.utils.MovieDBUtils;
@@ -35,10 +36,9 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
             MoviesContract.Movie.VOTE_AVERAGE
     };
 
-    static int MOVIE_ID = 0;
-
-    static int MOVIE_POSTER_PATH = 1;
-    static int MOVIE_TITLE = 2;
+    public static int MOVIE_ID = 0;
+    public static int MOVIE_POSTER_PATH = 1;
+    public static int MOVIE_TITLE = 2;
 
     private MoviesListAdapter mAdapter;
     private OnMovieSelectedListener mListener;

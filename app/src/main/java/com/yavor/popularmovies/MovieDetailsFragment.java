@@ -15,14 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
+import com.yavor.popularmovies.adapters.ReviewsAdapter;
+import com.yavor.popularmovies.adapters.TrailersAdapter;
 import com.yavor.popularmovies.data.MoviesContract;
 import com.yavor.popularmovies.utils.MovieDBUtils;
-import com.yavor.popularmovies.views.YoutubePlayView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,6 +39,8 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     private static final int REVIEWS_LOADER = 3;
     private static final int TRAILERS_LOADER = 4;
     private Uri mMovieUri;
+    private ReviewsAdapter mReviewAdapter;
+    private TrailersAdapter mTrailerAdapter;
 
     public static MovieDetailsFragment createInstance(Uri movieUri) {
         MovieDetailsFragment fragment = new MovieDetailsFragment();
@@ -63,7 +65,14 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_movie_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_movie_details, container, false);
+
+        mReviewAdapter = new ReviewsAdapter(getActivity(), (ViewGroup) rootView.findViewById(R.id.reviews_list),
+                rootView.findViewById(R.id.reviews_empty));
+        mTrailerAdapter = new TrailersAdapter(getActivity(), (ViewGroup) rootView.findViewById(R.id.trailers_list),
+                rootView.findViewById(R.id.trailers_empty));
+
+        return rootView;
     }
 
     @Override
@@ -136,72 +145,6 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         }
     }
 
-    private void bindTrailers(Cursor data) {
-        View rootView = getView();
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        View trailersContainer = rootView.findViewById(R.id.trailers_container);
-        LinearLayout trailersList = (LinearLayout) trailersContainer.findViewById(R.id.trailers_list);
-        trailersList.removeAllViews();
-        View emptyTrailers = trailersContainer.findViewById(R.id.trailers_empty);
-        if (!data.isAfterLast()) {
-            while (data.moveToNext()) {
-                View view = inflater.inflate(R.layout.list_item_trailer, trailersList, false);
-
-                // Trailer video
-                String site = data.getString(data.getColumnIndex(MoviesContract.Trailer.SITE));
-                String key = data.getString(data.getColumnIndex(MoviesContract.Trailer.KEY));
-                YoutubePlayView playView = (YoutubePlayView) view.findViewById(R.id.item_trailer_play);
-                Uri uri = YoutubePlayView.createVideoPath(site, key);
-                if (uri != null) {
-                    playView.setVideoPath(uri);
-                }
-
-                // Trailer name
-                String name = data.getString(data.getColumnIndex(MoviesContract.Trailer.NAME));
-                TextView trailerView = (TextView) view.findViewById(R.id.item_trailer_name);
-                trailerView.setText(name);
-
-                trailersList.addView(view);
-            }
-            emptyTrailers.setVisibility(View.GONE);
-            trailersList.setVisibility(View.VISIBLE);
-        } else {
-            emptyTrailers.setVisibility(View.VISIBLE);
-            trailersList.setVisibility(View.GONE);
-        }
-    }
-
-    private void bindReviews(Cursor data) {
-        View rootView = getView();
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        View reviewsContainer = rootView.findViewById(R.id.reviews_container);
-        LinearLayout reviewsList = (LinearLayout) reviewsContainer.findViewById(R.id.reviews_list);
-        reviewsList.removeAllViews();
-        View emptyReviews = reviewsContainer.findViewById(R.id.reviews_empty);
-        if (!data.isAfterLast()) {
-            while (data.moveToNext()) {
-                View view = inflater.inflate(R.layout.list_item_review, reviewsList, false);
-
-                // Author
-                TextView authorView = (TextView) view.findViewById(R.id.item_review_author);
-                String author = data.getString(data.getColumnIndex(MoviesContract.Review.AUTHOR));
-                authorView.setText(author);
-
-                // Text
-                TextView reviewView = (TextView) view.findViewById(R.id.item_review_text);
-                String content = data.getString(data.getColumnIndex(MoviesContract.Review.CONTENT));
-                reviewView.setText(content);
-
-                reviewsList.addView(view);
-            }
-            emptyReviews.setVisibility(View.GONE);
-            reviewsList.setVisibility(View.VISIBLE);
-        } else {
-            emptyReviews.setVisibility(View.VISIBLE);
-            reviewsList.setVisibility(View.GONE);
-        }
-    }
-
     private void onToggleFavourite(boolean isFavourite) {
         Log.v(LOG_TAG, "Toggle favourite");
         // TODO: Implement favourite
@@ -236,15 +179,23 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
                 bindView(data);
                 break;
             case REVIEWS_LOADER:
-                bindReviews(data);
+                mReviewAdapter.swapCursor(data);
                 break;
             case TRAILERS_LOADER:
-                bindTrailers(data);
+                mTrailerAdapter.swapCursor(data);
                 break;
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        switch (loader.getId()) {
+            case REVIEWS_LOADER:
+                mReviewAdapter.swapCursor(null);
+                break;
+            case TRAILERS_LOADER:
+                mTrailerAdapter.swapCursor(null);
+                break;
+        }
     }
 }

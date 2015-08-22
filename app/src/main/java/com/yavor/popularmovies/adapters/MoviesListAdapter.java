@@ -1,4 +1,4 @@
-package com.yavor.popularmovies;
+package com.yavor.popularmovies.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.yavor.popularmovies.MoviesFragment;
 import com.yavor.popularmovies.utils.MovieDBUtils;
 
 public class MoviesListAdapter extends CursorAdapter {
