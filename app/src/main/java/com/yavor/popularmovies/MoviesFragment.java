@@ -47,7 +47,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSortOrder = Utility.getPreferedSortOrder(getActivity());
+        mSortOrder = Utility.getPreferredSortOrder(getActivity());
     }
 
     @Override
@@ -106,14 +106,21 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String sorting = MovieDBUtils.createSortOrder(mSortOrder);
+        String sorting = null, filtering = null;
+        if (!mSortOrder.equals(Utility.FAVOURITES)) {
+            sorting = MovieDBUtils.createSortOrder(mSortOrder);
+        } else {
+            filtering = MoviesContract.Movie.FAVOURITE + "=1";
+        }
         return new CursorLoader(getActivity(), MoviesContract.Movie.CONTENT_URI,
-                PROJECTION, null, null, sorting);
+                PROJECTION, filtering, null, sorting);
     }
 
     public void onSortOrderChanged(String newSortOrder) {
         mSortOrder = newSortOrder;
-        updateMovies();
+        if (!newSortOrder.equals(Utility.FAVOURITES)) {
+            updateMovies();
+        }
         getLoaderManager().restartLoader(MOVIES_LOADER, null, this);
     }
 

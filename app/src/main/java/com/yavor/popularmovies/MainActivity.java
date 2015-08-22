@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.On
         } else {
             mTwoPane = false;
         }
-        mSortOrder = Utility.getPreferedSortOrder(this);
+        mSortOrder = Utility.getPreferredSortOrder(this);
     }
 
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.On
     protected void onResume() {
         super.onResume();
 
-        String sortOrder = Utility.getPreferedSortOrder(this);
+        String sortOrder = Utility.getPreferredSortOrder(this);
         if (!sortOrder.equals(mSortOrder)) {
             mSortOrder = sortOrder;
 
