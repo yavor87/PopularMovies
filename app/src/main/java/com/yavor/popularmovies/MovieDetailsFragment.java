@@ -3,6 +3,7 @@ package com.yavor.popularmovies;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +11,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -21,9 +27,11 @@ import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 import com.yavor.popularmovies.adapters.ReviewsAdapter;
+import com.yavor.popularmovies.adapters.SimpleAdapter;
 import com.yavor.popularmovies.adapters.TrailersAdapter;
 import com.yavor.popularmovies.data.MoviesContract;
 import com.yavor.popularmovies.utils.MovieDBUtils;
+import com.yavor.popularmovies.views.YoutubePlayView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,6 +40,7 @@ import java.util.Locale;
 public class MovieDetailsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public MovieDetailsFragment() {
+        setHasOptionsMenu(true);
     }
 
     private static final String LOG_TAG = MovieDetailsFragment.class.getSimpleName();
@@ -39,9 +48,11 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     private static final int DETAILS_LOADER = 2;
     private static final int REVIEWS_LOADER = 3;
     private static final int TRAILERS_LOADER = 4;
+    private static final String SHARE_HASHTAG = "#PopularMovies";
     private Uri mMovieUri;
     private ReviewsAdapter mReviewAdapter;
     private TrailersAdapter mTrailerAdapter;
+    private ShareActionProvider mShareActionProvider;
 
     public static MovieDetailsFragment createInstance(Uri movieUri) {
         MovieDetailsFragment fragment = new MovieDetailsFragment();
@@ -59,7 +70,6 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         if (args != null)
         {
             mMovieUri = args.getParcelable(MovieDetailsActivity.MOVIE_ARG);
-            //new FetchMovieInfoTask().execute(movieId);
         }
     }
 
@@ -72,8 +82,27 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
                 rootView.findViewById(R.id.reviews_empty));
         mTrailerAdapter = new TrailersAdapter(getActivity(), (ViewGroup) rootView.findViewById(R.id.trailers_list),
                 rootView.findViewById(R.id.trailers_empty));
+        mTrailerAdapter.setCallback(new SimpleAdapter.ViewBoundCallback() {
+            @Override
+            public void onViewBound(View view, Cursor data) {
+                if (data.getPosition() == 0) {
+                    String site = data.getString(data.getColumnIndex(MoviesContract.Trailer.SITE));
+                    String key = data.getString(data.getColumnIndex(MoviesContract.Trailer.KEY));
+                    Uri uri = YoutubePlayView.createVideoPath(site, key);
+                    mShareActionProvider.setShareIntent(createShareTrailerIntent(uri.toString()));
+                }
+            }
+        });
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_detail, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
     }
 
     @Override
@@ -144,6 +173,15 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         } else {
             overviewView.setText(getString(R.string.no_overview_found));
         }
+    }
+
+    private Intent createShareTrailerIntent(String trailer) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        shareIntent.setType("text/plain");
+        String content = String.format("Check out %s %s", trailer, SHARE_HASHTAG);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, content);
+        return shareIntent;
     }
 
     private void onToggleFavourite(boolean isFavourite) {

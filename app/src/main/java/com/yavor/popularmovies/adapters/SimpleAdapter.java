@@ -15,12 +15,16 @@ public abstract class SimpleAdapter {
     private Context mContext;
     private ViewGroup mContainer;
     private View mEmptyView;
+    private ViewBoundCallback mCallback;
 
     public void swapCursor(Cursor data) {
         if (data != null && data.getCount() > 0) {
             while (data.moveToNext()) {
                 View view = getViewForCursor(data);
                 bindView(view, mContext, data);
+                if (mCallback != null) {
+                    mCallback.onViewBound(view, data);
+                }
             }
             mEmptyView.setVisibility(View.GONE);
             mContainer.setVisibility(View.VISIBLE);
@@ -34,6 +38,14 @@ public abstract class SimpleAdapter {
 
     public abstract void bindView(View view, Context context, Cursor cursor);
 
+    public ViewBoundCallback getCallback() {
+        return mCallback;
+    }
+
+    public void setCallback(ViewBoundCallback callback) {
+        this.mCallback = callback;
+    }
+
     private View getViewForCursor(Cursor data) {
         int position = data.getPosition();
         View v;
@@ -44,5 +56,9 @@ public abstract class SimpleAdapter {
             mContainer.addView(v);
         }
         return v;
+    }
+
+    public interface ViewBoundCallback {
+        void onViewBound(View view, Cursor data);
     }
 }
