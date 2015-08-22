@@ -40,7 +40,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + MoviesContract.Trailer.TABLE_NAME + " ( "
             + MoviesContract.Trailer._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + MoviesContract.Trailer.MOVIE_ID + " INTEGER NOT NULL, "
-            + MoviesContract.Review.MOVIEDB_ID + " TEXT NOT NULL, "
+            + MoviesContract.Trailer.MOVIEDB_ID + " TEXT NOT NULL, "
             + MoviesContract.Trailer.NAME + " TEXT NOT NULL, "
             + MoviesContract.Trailer.SITE + " TEXT NOT NULL, "
             + MoviesContract.Trailer.KEY + " TEXT NOT NULL "
