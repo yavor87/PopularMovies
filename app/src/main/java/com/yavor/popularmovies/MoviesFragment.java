@@ -36,18 +36,25 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
             MoviesContract.Movie.VOTE_AVERAGE
     };
 
-    public static int MOVIE_ID = 0;
-    public static int MOVIE_POSTER_PATH = 1;
-    public static int MOVIE_TITLE = 2;
+    public static final int MOVIE_ID = 0;
+    public static final int MOVIE_POSTER_PATH = 1;
+    public static final int MOVIE_TITLE = 2;
+
+    private static final String SELECTED_POSITION_ARG = "selected_position";
 
     private MoviesListAdapter mAdapter;
     private OnMovieSelectedListener mListener;
     private String mSortOrder;
+    private int mSelectedPosition = -1;
+    private GridView mGridView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSortOrder = Utility.getPreferredSortOrder(getActivity());
+        if (savedInstanceState != null) {
+            mSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION_ARG);
+        }
     }
 
     @Override
@@ -63,17 +70,21 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
 
         mAdapter = new MoviesListAdapter(this.getActivity(), null, 0);
 
-        GridView gridView = (GridView)rootView.findViewById(R.id.grid_view);
-        gridView.setAdapter(mAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView = (GridView)rootView.findViewById(R.id.grid_view);
+        mGridView.setAdapter(mAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSelectedPosition = position;
                 if (mListener != null) {
                     Uri selectedMovie = ContentUris.withAppendedId(MoviesContract.Movie.CONTENT_URI, id);
                     mListener.movieSelected(selectedMovie);
                 }
             }
         });
+        if (mSelectedPosition != -1) {
+            mGridView.smoothScrollToPosition(mSelectedPosition);
+        }
 
         return rootView;
     }
@@ -96,6 +107,12 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SELECTED_POSITION_ARG, mSelectedPosition);
     }
 
     private void updateMovies() {
@@ -127,6 +144,16 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
+        if (mSelectedPosition == -1) {
+            final Uri selectedMovie = ContentUris.withAppendedId(MoviesContract.Movie.CONTENT_URI,
+                    mAdapter.getItemId(0));
+            mGridView.post(new Runnable() {
+                @Override
+                public void run() {
+                    mListener.movieSelected(selectedMovie);
+                }
+            });
+        }
     }
 
     @Override
