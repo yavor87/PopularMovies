@@ -3,6 +3,7 @@ package com.yavor.popularmovies.services;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.SQLException;
 import android.net.Uri;
 import android.util.Log;
 
@@ -71,15 +72,20 @@ public class MoviesService extends IntentService {
         }
 
         ContentValues movieValues = buildMovieContentValues(movie);
-        Uri uri = getContentResolver().insert(MoviesContract.Movie.CONTENT_URI, movieValues);
-        if (uri == null) {
-            Log.e(LOG_TAG, "Movie insertion failed");
-            return;
-        }
         ContentValues[] reviewValues = buildReviewsContentValues(movieId, movie.getReviews());
-        getContentResolver().bulkInsert(MoviesContract.Review.CONTENT_URI, reviewValues);
         ContentValues[] trailerValues = buildTrailersContentValues(movieId, movie.getVideos());
-        getContentResolver().bulkInsert(MoviesContract.Trailer.CONTENT_URI, trailerValues);
+
+        try {
+            Uri uri = getContentResolver().insert(MoviesContract.Movie.CONTENT_URI, movieValues);
+            if (uri == null) {
+                Log.e(LOG_TAG, "Movie insertion failed");
+                return;
+            }
+            getContentResolver().bulkInsert(MoviesContract.Review.CONTENT_URI, reviewValues);
+            getContentResolver().bulkInsert(MoviesContract.Trailer.CONTENT_URI, trailerValues);
+        } catch (SQLException e) {
+            Log.e(LOG_TAG, "Movie insertion failed");
+        }
     }
 
     private static ContentValues buildMovieContentValues(MovieDb movie) {

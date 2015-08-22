@@ -12,7 +12,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TABLE_MOVIE = "CREATE TABLE IF NOT EXISTS "
             + MoviesContract.Movie.TABLE_NAME + " ( "
-            + MoviesContract.Movie._ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, "
+            + MoviesContract.Movie._ID + " INTEGER PRIMARY KEY ON CONFLICT IGNORE, "
             + MoviesContract.Movie.TITLE + " TEXT NOT NULL, "
             + MoviesContract.Movie.RELEASE_DATE + " INTEGER, "
             + MoviesContract.Movie.RUNTIME + " INTEGER, "
@@ -20,7 +20,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + MoviesContract.Movie.VOTE_AVERAGE + " REAL, "
             + MoviesContract.Movie.POPULARITY + " REAL, "
             + MoviesContract.Movie.OVERVIEW + " TEXT, "
-            + MoviesContract.Movie.FAVOURITE + " INTEGER"
+            + MoviesContract.Movie.FAVOURITE + " INTEGER DEFAULT 0"
             + " );";
 
     private static final String SQL_CREATE_TABLE_MOVIEREVIEW = "CREATE TABLE IF NOT EXISTS "
@@ -34,7 +34,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + ") REFERENCES " + MoviesContract.Movie.TABLE_NAME
             + " (" + MoviesContract.Movie._ID + ") "
             + ", UNIQUE (" + MoviesContract.Review.MOVIEDB_ID
-            + ") ON CONFLICT REPLACE"
+            + ") ON CONFLICT IGNORE"
             + ");";
 
     private static final String SQL_CREATE_TABLE_MOVIETRAILER = "CREATE TABLE IF NOT EXISTS "
@@ -49,7 +49,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
             + ") REFERENCES " + MoviesContract.Movie.TABLE_NAME
             + " (" + MoviesContract.Movie._ID + ") "
             + ", UNIQUE (" + MoviesContract.Trailer.MOVIEDB_ID
-            + ") ON CONFLICT REPLACE"
+            + ") ON CONFLICT IGNORE"
             + ");";
 
     public MoviesDBHelper(Context context) {

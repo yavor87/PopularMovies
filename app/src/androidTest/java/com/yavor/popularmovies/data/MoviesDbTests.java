@@ -53,7 +53,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
         // Assert
         assertEquals(1, id1);
-        assertEquals(id1, id2);
+        assertEquals(-1, id2);
     }
 
     public void testInsert_Movie_Twice_WithReviews() {
@@ -68,7 +68,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
         // Assert
         assertEquals(1, id1);
-        assertEquals(id1, id2);
+        assertEquals(-1, id2);
     }
 
     public void testInsert_Movie_Twice_WithTrailers() {
@@ -83,7 +83,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
         // Assert
         assertEquals(1, id1);
-        assertEquals(id1, id2);
+        assertEquals(-1, id2);
     }
 
     public void testInsert_Movie_Twice_WithReviewsAndTrailers() {
@@ -99,7 +99,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
         // Assert
         assertEquals(1, id1);
-        assertEquals(id1, id2);
+        assertEquals(-1, id2);
     }
 
     public void testInsert_Review() {
@@ -132,7 +132,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
         // Assert
         assertEquals(1, id1);
-        assertEquals(2, id2);
+        assertEquals(-1, id2);
         assertEquals(1, count);
     }
 
@@ -166,7 +166,7 @@ public class MoviesDbTests extends AndroidTestCase {
 
         // Assert
         assertEquals(1, id1);
-        assertEquals(2, id2);
+        assertEquals(-1, id2);
         assertEquals(1, count);
     }
 

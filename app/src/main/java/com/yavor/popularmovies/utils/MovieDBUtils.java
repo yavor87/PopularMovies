@@ -26,7 +26,7 @@ public class MovieDBUtils {
     }
 
     public static Date parseDate(String releaseDate) {
-        if (releaseDate != null) {
+        if (releaseDate != null && !releaseDate.isEmpty()) {
             try {
                 return DATE_FORMAT.parse(releaseDate);
             } catch (ParseException e) {
