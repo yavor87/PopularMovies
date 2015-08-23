@@ -63,6 +63,8 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
         mSortOrder = Utility.getPreferredSortOrder(getActivity());
         if (savedInstanceState != null) {
             mSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION_ARG);
+        } else {
+            updateMovies();
         }
     }
 
@@ -96,12 +98,6 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
         return rootView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        updateMovies();
     }
 
     @Override
