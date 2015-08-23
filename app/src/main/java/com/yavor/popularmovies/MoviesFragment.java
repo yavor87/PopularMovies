@@ -47,6 +47,15 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     private String mSortOrder;
     private int mSelectedPosition = -1;
     private GridView mGridView;
+    private boolean mShouldSelectFirst;
+
+    public boolean getShouldSelectFirst() {
+        return mShouldSelectFirst;
+    }
+
+    public void setShouldSelectFirst(boolean shouldSelectFirst) {
+        this.mShouldSelectFirst = shouldSelectFirst;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,7 +153,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
-        if (mSelectedPosition == -1) {
+        if (mShouldSelectFirst && mSelectedPosition == -1) {
             final Uri selectedMovie = ContentUris.withAppendedId(MoviesContract.Movie.CONTENT_URI,
                     mAdapter.getItemId(0));
             mGridView.post(new Runnable() {

@@ -53,6 +53,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     private ReviewsAdapter mReviewAdapter;
     private TrailersAdapter mTrailerAdapter;
     private ShareActionProvider mShareActionProvider;
+    private String mFirstTrailerUrl;
 
     public static MovieDetailsFragment createInstance(Uri movieUri) {
         MovieDetailsFragment fragment = new MovieDetailsFragment();
@@ -89,7 +90,12 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
                     String site = data.getString(data.getColumnIndex(MoviesContract.Trailer.SITE));
                     String key = data.getString(data.getColumnIndex(MoviesContract.Trailer.KEY));
                     Uri uri = YoutubePlayView.createVideoPath(site, key);
-                    mShareActionProvider.setShareIntent(createShareTrailerIntent(uri.toString()));
+                    if (uri != null) {
+                        mFirstTrailerUrl = uri.toString();
+                        if (mShareActionProvider != null) {
+                            mShareActionProvider.setShareIntent(createShareTrailerIntent(mFirstTrailerUrl));
+                        }
+                    }
                 }
             }
         });
@@ -103,6 +109,9 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
         MenuItem menuItem = menu.findItem(R.id.action_share);
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        if (mFirstTrailerUrl != null) {
+            mShareActionProvider.setShareIntent(createShareTrailerIntent(mFirstTrailerUrl));
+        }
     }
 
     @Override

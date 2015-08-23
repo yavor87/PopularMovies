@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.On
         } else {
             mTwoPane = false;
         }
+        MoviesFragment fragment = (MoviesFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_movies_list);
+        fragment.setShouldSelectFirst(mTwoPane);
         mSortOrder = Utility.getPreferredSortOrder(this);
     }
 
